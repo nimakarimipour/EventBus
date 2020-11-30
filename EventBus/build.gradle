@@ -1,4 +1,39 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'edu.ucr.cs.riple:NullAwayAutoFixer:1.0-SNAPSHOT'
+    }
+}
+
+
+plugins {
+    id 'java'
+    id("net.ltgt.errorprone") version "0.6"
+}
+
+apply plugin: 'edu.ucr.cs.riple.plugin'
+
 apply plugin: 'java'
+
+autoFixMode {
+    fixPath = "/tmp/NullAwayFix"
+    maximumRound = 20
+}
+
+annotationEditor {
+    remove = ["org.checkerframework.checker.nullness.qual.Nullable", "org.checkerframework.checker.nullness.qual.NonNull"]
+    subProjects = ["caffeine"]
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+
 
 archivesBaseName = 'eventbus'
 group = 'org.greenrobot'
@@ -10,6 +45,12 @@ dependencies {
     compileOnly 'com.google.android:android-test:4.1.1.4'
     compileOnly 'com.google.android:annotations:4.1.1.4'
     compileOnly 'com.google.android:support-v4:r7'
+
+    annotationProcessor "edu.ucr.cs.riple:nullaway:0.7.12-SNAPSHOT"
+
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+    errorprone "com.google.errorprone:error_prone_core:2.3.2"
+    errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
 }
 
 sourceSets {
@@ -57,3 +98,18 @@ uploadArchives {
         }
     }
 }
+
+
+tasks.withType(JavaCompile) {
+    // remove the if condition if you want to run NullAway on test code
+    if (!name.toLowerCase().contains("test")) {
+        options.errorprone.disableWarningsInGeneratedCode = true
+        options.errorprone.errorproneArgs += ["-XepDisableAllChecks",
+                                              "-Xep:NullAway:ERROR",
+                                              "-XepOpt:NullAway:AnnotatedPackages=org.greenrobot.eventbus",
+                                              "-XepOpt:NullAway:AutoFix=true",
+                                              "-XepDisableAllWarnings"]
+        options.compilerArgs << "-Xmaxerrs" << "100000"
+    }
+}
+
