@@ -15,6 +15,8 @@
  */
 package org.greenrobot.eventbus;
 
+import javax.annotation.Nullable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,22 +28,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 
-/**
- * EventBus is a central publish/subscribe event system for Java and Android.
- * Events are posted ({@link #post(Object)}) to the bus, which delivers it to subscribers that have a matching handler
- * method for the event type.
- * To receive events, subscribers must register themselves to the bus using {@link #register(Object)}.
- * Once registered, subscribers receive events until {@link #unregister(Object)} is called.
- * Event handling methods must be annotated by {@link Subscribe}, must be public, return nothing (void),
- * and have exactly one parameter (the event).
- *
- * @author Markus Junginger, greenrobot
- */
 public class EventBus {
 
     /** Log tag, apps may override it. */
     public static String TAG = "EventBus";
 
+    @Nullable
     static volatile EventBus defaultInstance;
 
     private static final EventBusBuilder DEFAULT_BUILDER = new EventBusBuilder();
@@ -199,7 +191,7 @@ public class EventBus {
         }
     }
 
-    private void checkPostStickyEventToSubscription(Subscription newSubscription, Object stickyEvent) {
+    private void checkPostStickyEventToSubscription(Subscription newSubscription, @Nullable Object stickyEvent) {
         if (stickyEvent != null) {
             // If the subscriber is trying to abort the event, it will fail (event is not tracked in posting state)
             // --> Strange corner case, which we don't take care of here.
@@ -505,7 +497,7 @@ public class EventBus {
         }
     }
 
-    void invokeSubscriber(Subscription subscription, Object event) {
+    void invokeSubscriber(Subscription subscription, @Nullable Object event) {
         try {
             subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
         } catch (InvocationTargetException e) {
@@ -546,7 +538,11 @@ public class EventBus {
         final List<Object> eventQueue = new ArrayList<>();
         boolean isPosting;
         boolean isMainThread;
+
+        @Nullable
         Subscription subscription;
+
+        @Nullable
         Object event;
         boolean canceled;
     }

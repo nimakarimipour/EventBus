@@ -15,9 +15,10 @@
  */
 package org.greenrobot.eventbus;
 
+import org.greenrobot.eventbus.Initializer;
+
 import java.lang.reflect.Method;
 
-/** Used internally by EventBus and generated subscriber indexes. */
 public class SubscriberMethod {
     final Method method;
     final ThreadMode threadMode;
@@ -50,6 +51,7 @@ public class SubscriberMethod {
         }
     }
 
+    @Initializer
     private synchronized void checkMethodString() {
         if (methodString == null) {
             // Method.toString has more overhead, just take relevant parts of the method

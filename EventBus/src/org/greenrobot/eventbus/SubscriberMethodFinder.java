@@ -15,6 +15,10 @@
  */
 package org.greenrobot.eventbus;
 
+import javax.annotation.Nullable;
+
+import org.greenrobot.eventbus.Initializer;
+
 import org.greenrobot.eventbus.meta.SubscriberInfo;
 import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
 
@@ -119,6 +123,7 @@ class SubscriberMethodFinder {
         return new FindState();
     }
 
+    @Nullable
     private SubscriberInfo getSubscriberInfo(FindState findState) {
         if (findState.subscriberInfo != null && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
             SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
@@ -204,11 +209,15 @@ class SubscriberMethodFinder {
         final Map<String, Class> subscriberClassByMethodKey = new HashMap<>();
         final StringBuilder methodKeyBuilder = new StringBuilder(128);
 
+        @Nullable
         Class<?> subscriberClass;
         Class<?> clazz;
         boolean skipSuperClasses;
+
+        @Nullable
         SubscriberInfo subscriberInfo;
 
+        @Initializer
         void initForSubscriber(Class<?> subscriberClass) {
             this.subscriberClass = clazz = subscriberClass;
             skipSuperClasses = false;

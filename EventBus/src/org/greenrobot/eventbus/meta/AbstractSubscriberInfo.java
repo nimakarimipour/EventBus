@@ -15,13 +15,14 @@
  */
 package org.greenrobot.eventbus.meta;
 
+import javax.annotation.Nullable;
+
 import org.greenrobot.eventbus.EventBusException;
 import org.greenrobot.eventbus.SubscriberMethod;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Method;
 
-/** Base class for generated subscriber meta info classes created by annotation processing. */
 public abstract class AbstractSubscriberInfo implements SubscriberInfo {
     private final Class subscriberClass;
     private final Class<? extends SubscriberInfo> superSubscriberInfoClass;
@@ -39,7 +40,7 @@ public abstract class AbstractSubscriberInfo implements SubscriberInfo {
         return subscriberClass;
     }
 
-    @Override
+    @Override@Nullable
     public SubscriberInfo getSuperSubscriberInfo() {
         if(superSubscriberInfoClass == null) {
             return null;

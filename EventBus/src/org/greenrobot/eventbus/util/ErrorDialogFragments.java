@@ -16,6 +16,8 @@
 
 package org.greenrobot.eventbus.util;
 
+import javax.annotation.Nullable;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,6 +36,7 @@ public class ErrorDialogFragments {
     public static int ERROR_DIALOG_ICON = 0;
 
     /** TODO Use config:  Event class to be fired on dismissing the dialog by the user. May be configured by each app. */
+    @Nullable
     public static Class<?> EVENT_TYPE_ON_CLICK;
 
     public static Dialog createDialog(Context context, Bundle arguments, OnClickListener onClickListener) {

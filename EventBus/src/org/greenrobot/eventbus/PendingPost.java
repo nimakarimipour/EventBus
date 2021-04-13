@@ -15,14 +15,21 @@
  */
 package org.greenrobot.eventbus;
 
+import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 final class PendingPost {
     private final static List<PendingPost> pendingPostPool = new ArrayList<PendingPost>();
 
+    @Nullable
     Object event;
+
+    @Nullable
     Subscription subscription;
+
+    @Nullable
     PendingPost next;
 
     private PendingPost(Object event, Subscription subscription) {

@@ -16,6 +16,8 @@
 
 package org.greenrobot.eventbus.util;
 
+import javax.annotation.Nullable;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Application;
@@ -29,27 +31,17 @@ import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 
-/**
- * Central class for app that want to use event based error dialogs.<br/>
- * <br/>
- * How to use:
- * <ol>
- * <li>Set the {@link #factory} to configure dialogs for your app, typically in {@link Application#onCreate()}</li>
- * <li>Use one of {@link #attachTo(Activity)}, {@link #attachTo(Activity, boolean)} or
- * {@link #attachTo(Activity, boolean, Bundle)} in your Activity, typically in onCreate.</li>
- * </ol>
- * 
- * For more complex mappings, you can supply your own {@link ErrorDialogFragmentFactory}.
- * 
- * @author Markus
- */
 public class ErrorDialogManager {
 
     public static class SupportManagerFragment extends Fragment {
         protected boolean finishAfterDialog;
+
+        @Nullable
         protected Bundle argumentsForErrorDialog;
         private EventBus eventBus;
         private boolean skipRegisterOnNextResume;
+
+        @Nullable
         private Object executionScope;
 
         @Override
@@ -118,8 +110,14 @@ public class ErrorDialogManager {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class HoneycombManagerFragment extends android.app.Fragment {
         protected boolean finishAfterDialog;
+
+        @Nullable
         protected Bundle argumentsForErrorDialog;
+
+        @Nullable
         private EventBus eventBus;
+
+        @Nullable
         private Object executionScope;
 
         @Override
@@ -197,7 +195,7 @@ public class ErrorDialogManager {
     }
 
     /** Scope is limited to the activity's class. */
-    public static void attachTo(Activity activity, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
+    public static void attachTo(Activity activity, boolean finishAfterDialog, @Nullable Bundle argumentsForErrorDialog) {
         Object executionScope = activity.getClass();
         attachTo(activity, executionScope, finishAfterDialog, argumentsForErrorDialog);
     }
@@ -248,7 +246,7 @@ public class ErrorDialogManager {
         }
     }
 
-    private static boolean isInExecutionScope(Object executionScope, ThrowableFailureEvent event) {
+    private static boolean isInExecutionScope(@Nullable Object executionScope, ThrowableFailureEvent event) {
         if (event != null) {
             Object eventExecutionScope = event.getExecutionScope();
             if (eventExecutionScope != null && !eventExecutionScope.equals(executionScope)) {
