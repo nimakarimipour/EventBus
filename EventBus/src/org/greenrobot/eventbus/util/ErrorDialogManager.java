@@ -30,6 +30,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Initializer;
 
 public class ErrorDialogManager {
 
@@ -114,13 +115,13 @@ public class ErrorDialogManager {
         @Nullable
         protected Bundle argumentsForErrorDialog;
 
-        @Nullable
         private EventBus eventBus;
 
         @Nullable
         private Object executionScope;
 
         @Override
+        @Initializer
         public void onResume() {
             super.onResume();
             eventBus = ErrorDialogManager.factory.config.getEventBus();
@@ -199,7 +200,7 @@ public class ErrorDialogManager {
         Object executionScope = activity.getClass();
         attachTo(activity, executionScope, finishAfterDialog, argumentsForErrorDialog);
     }
-    
+
     public static void attachTo(Activity activity, Object executionScope, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
         if (factory == null) {
             throw new RuntimeException("You must set the static factory field to configure error dialogs for your app.");
