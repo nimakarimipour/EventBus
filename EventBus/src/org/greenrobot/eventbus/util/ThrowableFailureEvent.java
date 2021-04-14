@@ -15,13 +15,14 @@
  */
 package org.greenrobot.eventbus.util;
 
+import org.greenrobot.eventbus.Initializer;
+
 import javax.annotation.Nullable;
 
 public class ThrowableFailureEvent implements HasExecutionScope {
     protected final Throwable throwable;
     protected final boolean suppressErrorUi;
 
-    @Nullable
     private Object executionContext;
 
     public ThrowableFailureEvent(Throwable throwable) {
@@ -51,8 +52,9 @@ public class ThrowableFailureEvent implements HasExecutionScope {
         return executionContext;
     }
 
+    @Initializer
     public void setExecutionScope(Object executionContext) {
         this.executionContext = executionContext;
     }
-    
+
 }
