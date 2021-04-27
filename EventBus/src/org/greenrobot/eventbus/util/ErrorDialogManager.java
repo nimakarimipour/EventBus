@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.greenrobot.eventbus.util;
 
 import android.annotation.TargetApi;
@@ -26,8 +25,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-
 import org.greenrobot.eventbus.EventBus;
+import javax.annotation.Nullable;
 
 /**
  * Central class for app that want to use event based error dialogs.<br/>
@@ -38,18 +37,25 @@ import org.greenrobot.eventbus.EventBus;
  * <li>Use one of {@link #attachTo(Activity)}, {@link #attachTo(Activity, boolean)} or
  * {@link #attachTo(Activity, boolean, Bundle)} in your Activity, typically in onCreate.</li>
  * </ol>
- * 
+ *
  * For more complex mappings, you can supply your own {@link ErrorDialogFragmentFactory}.
- * 
+ *
  * @author Markus
  */
 public class ErrorDialogManager {
 
     public static class SupportManagerFragment extends Fragment {
+
         protected boolean finishAfterDialog;
+
+        @Nullable()
         protected Bundle argumentsForErrorDialog;
+
         private EventBus eventBus;
+
         private boolean skipRegisterOnNextResume;
+
+        @Nullable()
         private Object executionScope;
 
         @Override
@@ -86,22 +92,18 @@ public class ErrorDialogManager {
             // Execute pending commits before finding to avoid multiple error fragments being shown
             FragmentManager fm = getFragmentManager();
             fm.executePendingTransactions();
-
             DialogFragment existingFragment = (DialogFragment) fm.findFragmentByTag(TAG_ERROR_DIALOG);
             if (existingFragment != null) {
                 // Just show the latest error
                 existingFragment.dismiss();
             }
-
-            android.support.v4.app.DialogFragment errorFragment = (android.support.v4.app.DialogFragment) factory
-                    .prepareErrorFragment(event, finishAfterDialog, argumentsForErrorDialog);
+            android.support.v4.app.DialogFragment errorFragment = (android.support.v4.app.DialogFragment) factory.prepareErrorFragment(event, finishAfterDialog, argumentsForErrorDialog);
             if (errorFragment != null) {
                 errorFragment.show(fm, TAG_ERROR_DIALOG);
             }
         }
 
-        public static void attachTo(Activity activity, Object executionScope, boolean finishAfterDialog,
-                Bundle argumentsForErrorDialog) {
+        public static void attachTo(Activity activity, Object executionScope, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
             FragmentManager fm = ((FragmentActivity) activity).getSupportFragmentManager();
             SupportManagerFragment fragment = (SupportManagerFragment) fm.findFragmentByTag(TAG_ERROR_DIALOG_MANAGER);
             if (fragment == null) {
@@ -117,9 +119,16 @@ public class ErrorDialogManager {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class HoneycombManagerFragment extends android.app.Fragment {
+
         protected boolean finishAfterDialog;
+
+        @Nullable()
         protected Bundle argumentsForErrorDialog;
+
+        @Nullable()
         private EventBus eventBus;
+
+        @Nullable()
         private Object executionScope;
 
         @Override
@@ -140,20 +149,15 @@ public class ErrorDialogManager {
                 return;
             }
             checkLogException(event);
-
             // Execute pending commits before finding to avoid multiple error fragments being shown
             android.app.FragmentManager fm = getFragmentManager();
             fm.executePendingTransactions();
-
-            android.app.DialogFragment existingFragment = (android.app.DialogFragment) fm
-                    .findFragmentByTag(TAG_ERROR_DIALOG);
+            android.app.DialogFragment existingFragment = (android.app.DialogFragment) fm.findFragmentByTag(TAG_ERROR_DIALOG);
             if (existingFragment != null) {
                 // Just show the latest error
                 existingFragment.dismiss();
             }
-
-            android.app.DialogFragment errorFragment = (android.app.DialogFragment) factory.prepareErrorFragment(event,
-                    finishAfterDialog, argumentsForErrorDialog);
+            android.app.DialogFragment errorFragment = (android.app.DialogFragment) factory.prepareErrorFragment(event, finishAfterDialog, argumentsForErrorDialog);
             if (errorFragment != null) {
                 errorFragment.show(fm, TAG_ERROR_DIALOG);
             }
@@ -161,8 +165,7 @@ public class ErrorDialogManager {
 
         public static void attachTo(Activity activity, Object executionScope, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
             android.app.FragmentManager fm = activity.getFragmentManager();
-            HoneycombManagerFragment fragment = (HoneycombManagerFragment) fm
-                    .findFragmentByTag(TAG_ERROR_DIALOG_MANAGER);
+            HoneycombManagerFragment fragment = (HoneycombManagerFragment) fm.findFragmentByTag(TAG_ERROR_DIALOG_MANAGER);
             if (fragment == null) {
                 fragment = new HoneycombManagerFragment();
                 fm.beginTransaction().add(fragment, TAG_ERROR_DIALOG_MANAGER).commit();
@@ -174,34 +177,47 @@ public class ErrorDialogManager {
         }
     }
 
-    /** Must be set by the application. */
+    /**
+     * Must be set by the application.
+     */
     public static ErrorDialogFragmentFactory<?> factory;
 
     protected static final String TAG_ERROR_DIALOG = "de.greenrobot.eventbus.error_dialog";
+
     protected static final String TAG_ERROR_DIALOG_MANAGER = "de.greenrobot.eventbus.error_dialog_manager";
 
     public static final String KEY_TITLE = "de.greenrobot.eventbus.errordialog.title";
+
     public static final String KEY_MESSAGE = "de.greenrobot.eventbus.errordialog.message";
+
     public static final String KEY_FINISH_AFTER_DIALOG = "de.greenrobot.eventbus.errordialog.finish_after_dialog";
+
     public static final String KEY_ICON_ID = "de.greenrobot.eventbus.errordialog.icon_id";
+
     public static final String KEY_EVENT_TYPE_ON_CLOSE = "de.greenrobot.eventbus.errordialog.event_type_on_close";
 
-    /** Scope is limited to the activity's class. */
+    /**
+     * Scope is limited to the activity's class.
+     */
     public static void attachTo(Activity activity) {
         attachTo(activity, false, null);
     }
 
-    /** Scope is limited to the activity's class. */
+    /**
+     * Scope is limited to the activity's class.
+     */
     public static void attachTo(Activity activity, boolean finishAfterDialog) {
         attachTo(activity, finishAfterDialog, null);
     }
 
-    /** Scope is limited to the activity's class. */
-    public static void attachTo(Activity activity, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
+    /**
+     * Scope is limited to the activity's class.
+     */
+    public static void attachTo(Activity activity, boolean finishAfterDialog, @Nullable() Bundle argumentsForErrorDialog) {
         Object executionScope = activity.getClass();
         attachTo(activity, executionScope, finishAfterDialog, argumentsForErrorDialog);
     }
-    
+
     public static void attachTo(Activity activity, Object executionScope, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
         if (factory == null) {
             throw new RuntimeException("You must set the static factory field to configure error dialogs for your app.");
@@ -215,7 +231,7 @@ public class ErrorDialogManager {
 
     private static boolean isSupportActivity(Activity activity) {
         boolean isSupport = false;
-        for (Class<?> c = activity.getClass().getSuperclass();; c = c.getSuperclass()) {
+        for (Class<?> c = activity.getClass().getSuperclass(); ; c = c.getSuperclass()) {
             if (c == null) {
                 throw new RuntimeException("Illegal activity type: " + activity.getClass());
             }
@@ -223,14 +239,11 @@ public class ErrorDialogManager {
             if (name.equals("android.support.v4.app.FragmentActivity")) {
                 isSupport = true;
                 break;
-            } else if (name.startsWith("com.actionbarsherlock.app")
-                    && (name.endsWith(".SherlockActivity") || name.endsWith(".SherlockListActivity") || name
-                            .endsWith(".SherlockPreferenceActivity"))) {
+            } else if (name.startsWith("com.actionbarsherlock.app") && (name.endsWith(".SherlockActivity") || name.endsWith(".SherlockListActivity") || name.endsWith(".SherlockPreferenceActivity"))) {
                 throw new RuntimeException("Please use SherlockFragmentActivity. Illegal activity: " + name);
             } else if (name.equals("android.app.Activity")) {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                    throw new RuntimeException(
-                            "Illegal activity without fragment support. Either use Android 3.0+ or android.support.v4.app.FragmentActivity.");
+                    throw new RuntimeException("Illegal activity without fragment support. Either use Android 3.0+ or android.support.v4.app.FragmentActivity.");
                 }
                 break;
             }
@@ -248,7 +261,7 @@ public class ErrorDialogManager {
         }
     }
 
-    private static boolean isInExecutionScope(Object executionScope, ThrowableFailureEvent event) {
+    private static boolean isInExecutionScope(@Nullable() Object executionScope, ThrowableFailureEvent event) {
         if (event != null) {
             Object eventExecutionScope = event.getExecutionScope();
             if (eventExecutionScope != null && !eventExecutionScope.equals(executionScope)) {
@@ -258,5 +271,4 @@ public class ErrorDialogManager {
         }
         return true;
     }
-
 }

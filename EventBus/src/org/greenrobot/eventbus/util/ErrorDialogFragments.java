@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.greenrobot.eventbus.util;
 
 import android.annotation.TargetApi;
@@ -26,14 +25,20 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-
 import org.greenrobot.eventbus.EventBus;
+import javax.annotation.Nullable;
 
 public class ErrorDialogFragments {
-    /** TODO Use config:  Icon res ID to use for all error dialogs. May be configured by each app (optional). */
+
+    /**
+     * TODO Use config:  Icon res ID to use for all error dialogs. May be configured by each app (optional).
+     */
     public static int ERROR_DIALOG_ICON = 0;
 
-    /** TODO Use config:  Event class to be fired on dismissing the dialog by the user. May be configured by each app. */
+    /**
+     * TODO Use config:  Event class to be fired on dismissing the dialog by the user. May be configured by each app.
+     */
+    @Nullable()
     public static Class<?> EVENT_TYPE_ON_CLICK;
 
     public static Dialog createDialog(Context context, Bundle arguments, OnClickListener onClickListener) {
@@ -66,6 +71,7 @@ public class ErrorDialogFragments {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class Honeycomb extends android.app.DialogFragment implements OnClickListener {
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             return createDialog(getActivity(), getArguments(), this);
@@ -78,6 +84,7 @@ public class ErrorDialogFragments {
     }
 
     public static class Support extends DialogFragment implements OnClickListener {
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             return createDialog(getActivity(), getArguments(), this);

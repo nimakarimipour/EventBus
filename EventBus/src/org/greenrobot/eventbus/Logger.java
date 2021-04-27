@@ -17,8 +17,8 @@ package org.greenrobot.eventbus;
 
 import android.os.Looper;
 import org.greenrobot.eventbus.android.AndroidLogger;
-
 import java.util.logging.Level;
+import javax.annotation.Nullable;
 
 public interface Logger {
 
@@ -27,6 +27,7 @@ public interface Logger {
     void log(Level level, String msg, Throwable th);
 
     class JavaLogger implements Logger {
+
         protected final java.util.logging.Logger logger;
 
         public JavaLogger(String tag) {
@@ -44,7 +45,6 @@ public interface Logger {
             // TODO Replace logged method with caller method
             logger.log(level, msg, th);
         }
-
     }
 
     class SystemOutLogger implements Logger {
@@ -59,17 +59,16 @@ public interface Logger {
             System.out.println("[" + level + "] " + msg);
             th.printStackTrace(System.out);
         }
-
     }
 
     class Default {
+
         public static Logger get() {
             // also check main looper to see if we have "good" Android classes (not Stubs etc.)
-            return AndroidLogger.isAndroidLogAvailable() && getAndroidMainLooperOrNull() != null
-                    ? new AndroidLogger("EventBus") :
-                    new Logger.SystemOutLogger();
+            return AndroidLogger.isAndroidLogAvailable() && getAndroidMainLooperOrNull() != null ? new AndroidLogger("EventBus") : new Logger.SystemOutLogger();
         }
 
+        @Nullable()
         static Object getAndroidMainLooperOrNull() {
             try {
                 return Looper.getMainLooper();
@@ -79,5 +78,4 @@ public interface Logger {
             }
         }
     }
-
 }

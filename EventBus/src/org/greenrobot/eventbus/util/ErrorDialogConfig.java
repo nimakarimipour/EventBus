@@ -13,24 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.greenrobot.eventbus.util;
 
 import android.content.res.Resources;
 import android.util.Log;
-
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Initializer;
 
 public class ErrorDialogConfig {
+
     final Resources resources;
+
     final int defaultTitleId;
+
     final int defaultErrorMsgId;
+
     final ExceptionToResourceMapping mapping;
 
     EventBus eventBus;
+
     boolean logExceptions = true;
+
     String tagForLoggingExceptions;
+
     int defaultDialogIconId;
+
     Class<?> defaultEventTypeOnDialogClosed;
 
     public ErrorDialogConfig(Resources resources, int defaultTitleId, int defaultMsgId) {
@@ -59,6 +66,7 @@ public class ErrorDialogConfig {
         this.defaultDialogIconId = defaultDialogIconId;
     }
 
+    @Initializer()
     public void setDefaultEventTypeOnDialogClosed(Class<?> defaultEventTypeOnDialogClosed) {
         this.defaultEventTypeOnDialogClosed = defaultEventTypeOnDialogClosed;
     }
@@ -67,16 +75,20 @@ public class ErrorDialogConfig {
         logExceptions = false;
     }
 
+    @Initializer()
     public void setTagForLoggingExceptions(String tagForLoggingExceptions) {
         this.tagForLoggingExceptions = tagForLoggingExceptions;
     }
 
+    @Initializer()
     public void setEventBus(EventBus eventBus) {
         this.eventBus = eventBus;
     }
 
-    /** eventBus!=null ? eventBus: EventBus.getDefault() */
+    /**
+     * eventBus!=null ? eventBus: EventBus.getDefault()
+     */
     EventBus getEventBus() {
-        return eventBus!=null ? eventBus: EventBus.getDefault();
+        return eventBus != null ? eventBus : EventBus.getDefault();
     }
 }

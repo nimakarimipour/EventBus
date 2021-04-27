@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.greenrobot.eventbus;
 
+import javax.annotation.Nullable;
+
 final class PendingPostQueue {
+
+    @Nullable()
     private PendingPost head;
+
+    @Nullable()
     private PendingPost tail;
 
+    @Initializer()
     synchronized void enqueue(PendingPost pendingPost) {
         if (pendingPost == null) {
             throw new NullPointerException("null cannot be enqueued");
@@ -35,6 +41,8 @@ final class PendingPostQueue {
         notifyAll();
     }
 
+    @Initializer()
+    @Nullable()
     synchronized PendingPost poll() {
         PendingPost pendingPost = head;
         if (head != null) {
@@ -46,11 +54,11 @@ final class PendingPostQueue {
         return pendingPost;
     }
 
+    @Nullable()
     synchronized PendingPost poll(int maxMillisToWait) throws InterruptedException {
         if (head == null) {
             wait(maxMillisToWait);
         }
         return poll();
     }
-
 }
