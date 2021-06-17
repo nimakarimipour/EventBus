@@ -21,13 +21,16 @@ import java.lang.reflect.Constructor;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
-
+import org.greenrobot.eventbus.Initializer;
 /**
  * Executes an {@link RunnableEx} using a thread pool. Thrown exceptions are propagated by posting failure events of any
  * given type (default is {@link ThrowableFailureEvent}).
  * 
  * @author Markus
  */
+import javax.annotation.Nullable;
+import javax.annotation.Nullable;
+
 public class AsyncExecutor {
 
     public static class Builder {
@@ -57,7 +60,8 @@ public class AsyncExecutor {
             return buildForScope(null);
         }
 
-        public AsyncExecutor buildForScope(Object executionContext) {
+        @Initializer
+        public AsyncExecutor buildForScope(@Nullable Object executionContext) {
             if (eventBus == null) {
                 eventBus = EventBus.getDefault();
             }
@@ -89,7 +93,7 @@ public class AsyncExecutor {
     private final EventBus eventBus;
     private final Object scope;
 
-    private AsyncExecutor(Executor threadPool, EventBus eventBus, Class<?> failureEventType, Object scope) {
+    private AsyncExecutor(Executor threadPool, EventBus eventBus, Class<?> failureEventType, @Nullable Object scope) {
         this.threadPool = threadPool;
         this.eventBus = eventBus;
         this.scope = scope;

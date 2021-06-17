@@ -28,7 +28,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
-
+import org.greenrobot.eventbus.Initializer;
 /**
  * Central class for app that want to use event based error dialogs.<br/>
  * <br/>
@@ -43,6 +43,9 @@ import org.greenrobot.eventbus.EventBus;
  * 
  * @author Markus
  */
+import javax.annotation.Nullable;
+import javax.annotation.Nullable;
+
 public class ErrorDialogManager {
 
     public static class SupportManagerFragment extends Fragment {
@@ -123,6 +126,7 @@ public class ErrorDialogManager {
         private Object executionScope;
 
         @Override
+        @Initializer
         public void onResume() {
             super.onResume();
             eventBus = ErrorDialogManager.factory.config.getEventBus();
@@ -197,7 +201,7 @@ public class ErrorDialogManager {
     }
 
     /** Scope is limited to the activity's class. */
-    public static void attachTo(Activity activity, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
+    public static void attachTo(Activity activity, boolean finishAfterDialog, @Nullable Bundle argumentsForErrorDialog) {
         Object executionScope = activity.getClass();
         attachTo(activity, executionScope, finishAfterDialog, argumentsForErrorDialog);
     }

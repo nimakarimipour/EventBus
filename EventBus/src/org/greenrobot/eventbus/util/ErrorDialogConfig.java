@@ -20,6 +20,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Initializer;
 
 public class ErrorDialogConfig {
     final Resources resources;
@@ -59,6 +60,7 @@ public class ErrorDialogConfig {
         this.defaultDialogIconId = defaultDialogIconId;
     }
 
+    @Initializer
     public void setDefaultEventTypeOnDialogClosed(Class<?> defaultEventTypeOnDialogClosed) {
         this.defaultEventTypeOnDialogClosed = defaultEventTypeOnDialogClosed;
     }
@@ -67,10 +69,12 @@ public class ErrorDialogConfig {
         logExceptions = false;
     }
 
+    @Initializer
     public void setTagForLoggingExceptions(String tagForLoggingExceptions) {
         this.tagForLoggingExceptions = tagForLoggingExceptions;
     }
 
+    @Initializer
     public void setEventBus(EventBus eventBus) {
         this.eventBus = eventBus;
     }

@@ -50,6 +50,7 @@ public class SubscriberMethod {
         }
     }
 
+    @Initializer
     private synchronized void checkMethodString() {
         if (methodString == null) {
             // Method.toString has more overhead, just take relevant parts of the method

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus.util;
+import org.greenrobot.eventbus.Initializer;
+
 
 /**
  * A generic failure event, which can be used by apps to propagate thrown exceptions. Also used in conjunction with
@@ -50,6 +52,7 @@ public class ThrowableFailureEvent implements HasExecutionScope {
         return executionContext;
     }
 
+    @Initializer
     public void setExecutionScope(Object executionContext) {
         this.executionContext = executionContext;
     }

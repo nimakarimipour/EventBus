@@ -16,13 +16,15 @@
 package org.greenrobot.eventbus.meta;
 
 import org.greenrobot.eventbus.SubscriberMethod;
-
+import javax.annotation.Nullable;
 /** Base class for generated index classes created by annotation processing. */
+
 public interface SubscriberInfo {
     Class<?> getSubscriberClass();
 
     SubscriberMethod[] getSubscriberMethods();
 
+    @Nullable
     SubscriberInfo getSuperSubscriberInfo();
 
     boolean shouldCheckSuperclass();
