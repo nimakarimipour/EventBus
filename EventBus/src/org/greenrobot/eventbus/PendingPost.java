@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ final class PendingPost {
 
     Object event;
     Subscription subscription;
+    @Nullable
     PendingPost next;
 
     private PendingPost(Object event, Subscription subscription) {
