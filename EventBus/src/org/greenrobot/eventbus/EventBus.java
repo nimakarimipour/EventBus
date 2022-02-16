@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus;
+import javax.annotation.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -505,7 +506,7 @@ public class EventBus {
         }
     }
 
-    void invokeSubscriber(Subscription subscription, Object event) {
+    void invokeSubscriber(Subscription subscription, @Nullable Object event) {
         try {
             subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
         } catch (InvocationTargetException e) {

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus;
+import javax.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.List;
 final class PendingPost {
     private final static List<PendingPost> pendingPostPool = new ArrayList<PendingPost>();
 
+    @Nullable
     Object event;
     Subscription subscription;
     PendingPost next;
