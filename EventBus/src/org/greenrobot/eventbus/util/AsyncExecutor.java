@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus.util;
+import javax.annotation.Nullable;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -31,8 +32,11 @@ import java.util.logging.Level;
 public class AsyncExecutor {
 
     public static class Builder {
+        @Nullable
         private Executor threadPool;
+        @Nullable
         private Class<?> failureEventType;
+        @Nullable
         private EventBus eventBus;
 
         private Builder() {
