@@ -13,24 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.greenrobot.eventbus.util;
 
+import javax.annotation.Nullable;
 import android.content.res.Resources;
 import android.util.Log;
-
 import org.greenrobot.eventbus.EventBus;
 
 public class ErrorDialogConfig {
+
     final Resources resources;
+
     final int defaultTitleId;
+
     final int defaultErrorMsgId;
+
     final ExceptionToResourceMapping mapping;
 
+    @Nullable
     EventBus eventBus;
+
     boolean logExceptions = true;
+
+    @Nullable
     String tagForLoggingExceptions;
+
     int defaultDialogIconId;
+
+    @Nullable
     Class<?> defaultEventTypeOnDialogClosed;
 
     public ErrorDialogConfig(Resources resources, int defaultTitleId, int defaultMsgId) {
@@ -75,8 +85,10 @@ public class ErrorDialogConfig {
         this.eventBus = eventBus;
     }
 
-    /** eventBus!=null ? eventBus: EventBus.getDefault() */
+    /**
+     * eventBus!=null ? eventBus: EventBus.getDefault()
+     */
     EventBus getEventBus() {
-        return eventBus!=null ? eventBus: EventBus.getDefault();
+        return eventBus != null ? eventBus : EventBus.getDefault();
     }
 }
