@@ -15,13 +15,19 @@
  */
 package org.greenrobot.eventbus.util;
 
+import javax.annotation.Nullable;
+
 /**
  * A generic failure event, which can be used by apps to propagate thrown exceptions. Also used in conjunction with
  * {@link ErrorDialogManager}.
  */
 public class ThrowableFailureEvent implements HasExecutionScope {
+
     protected final Throwable throwable;
+
     protected final boolean suppressErrorUi;
+
+    @Nullable
     private Object executionContext;
 
     public ThrowableFailureEvent(Throwable throwable) {
@@ -46,12 +52,12 @@ public class ThrowableFailureEvent implements HasExecutionScope {
         return suppressErrorUi;
     }
 
+    @Nullable
     public Object getExecutionScope() {
         return executionContext;
     }
 
-    public void setExecutionScope(Object executionContext) {
+    public void setExecutionScope(@Nullable Object executionContext) {
         this.executionContext = executionContext;
     }
-    
 }
