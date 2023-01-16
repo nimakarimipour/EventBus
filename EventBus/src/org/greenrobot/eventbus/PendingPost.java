@@ -15,6 +15,7 @@
  */
 package org.greenrobot.eventbus;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
