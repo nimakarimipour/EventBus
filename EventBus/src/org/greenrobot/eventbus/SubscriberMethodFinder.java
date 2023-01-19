@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.greenrobot.eventbus.Initializer;
 import javax.annotation.Nullable;
+import org.greenrobot.eventbus.NullUnmarked;
 
 class SubscriberMethodFinder {
     /*
@@ -217,7 +218,7 @@ class SubscriberMethodFinder {
             subscriberInfo = null;
         }
 
-        void recycle() {
+        @NullUnmarked void recycle() {
             subscriberMethods.clear();
             anyMethodByEventType.clear();
             subscriberClassByMethodKey.clear();
@@ -265,7 +266,7 @@ class SubscriberMethodFinder {
             }
         }
 
-        void moveToSuperclass() {
+        @NullUnmarked void moveToSuperclass() {
             if (skipSuperClasses) {
                 clazz = null;
             } else {

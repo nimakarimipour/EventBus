@@ -1,0 +1,5 @@
+kind	class	method	param	index	uri	field
+METHOD	org.greenrobot.eventbus.SubscriberMethod	checkMethodString()	null	null	/private/tmp/projects/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethod.java	methodString
+METHOD	org.greenrobot.eventbus.EventBusBuilder	executorService(java.util.concurrent.ExecutorService)	null	null	/private/tmp/projects/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java	executorService
+METHOD	org.greenrobot.eventbus.SubscriberMethodFinder$FindState	initForSubscriber(java.lang.Class<?>)	null	null	/private/tmp/projects/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java	clazz
+METHOD	org.greenrobot.eventbus.util.ErrorDialogManager$SupportManagerFragment	onCreate(android.os.Bundle)	null	null	/private/tmp/projects/EventBus/EventBus/src/org/greenrobot/eventbus/util/ErrorDialogManager.java	eventBus
