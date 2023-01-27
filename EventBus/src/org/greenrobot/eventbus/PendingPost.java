@@ -22,9 +22,9 @@ import java.util.List;
 final class PendingPost {
     private final static List<PendingPost> pendingPostPool = new ArrayList<PendingPost>();
 
-    Object event;
-    Subscription subscription;
-    PendingPost next;
+    @Nullable Object event;
+    @Nullable Subscription subscription;
+    @Nullable PendingPost next;
 
     private PendingPost(Object event, Subscription subscription) {
         this.event = event;

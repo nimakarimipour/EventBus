@@ -16,6 +16,7 @@
 package org.greenrobot.eventbus;
 
 import java.lang.reflect.Method;
+import javax.annotation.Nullable;
 
 /** Used internally by EventBus and generated subscriber indexes. */
 public class SubscriberMethod {
