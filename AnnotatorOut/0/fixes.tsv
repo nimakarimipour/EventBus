@@ -1,0 +1,6 @@
+kind	class	method	param	index	uri	reason	annotation	rootClass	rootMethod
+FIELD	org.greenrobot.eventbus.SubscriberMethod	null	methodString	null	/tmp/projects/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethod.java	METHOD_NO_INIT	nullable	org.greenrobot.eventbus.SubscriberMethod	null
+FIELD	org.greenrobot.eventbus.SubscriberMethodFinder$FindState	null	clazz	null	/tmp/projects/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java	ASSIGN_FIELD_NULLABLE	nullable	org.greenrobot.eventbus.SubscriberMethodFinder$FindState	recycle()
+FIELD	org.greenrobot.eventbus.SubscriberMethodFinder$FindState	null	clazz	null	/tmp/projects/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java	ASSIGN_FIELD_NULLABLE	nullable	org.greenrobot.eventbus.SubscriberMethodFinder$FindState	moveToSuperclass()
+FIELD	org.greenrobot.eventbus.SubscriberMethodFinder$FindState	null	clazz	null	/tmp/projects/EventBus/EventBus/src/org/greenrobot/eventbus/SubscriberMethodFinder.java	ASSIGN_FIELD_NULLABLE	nullable	org.greenrobot.eventbus.SubscriberMethodFinder$FindState	moveToSuperclass()
+FIELD	org.greenrobot.eventbus.util.ErrorDialogManager	null	factory	null	/tmp/projects/EventBus/EventBus/src/org/greenrobot/eventbus/util/ErrorDialogManager.java	FIELD_NO_INIT	nullable	org.greenrobot.eventbus.util.ErrorDialogManager	null
