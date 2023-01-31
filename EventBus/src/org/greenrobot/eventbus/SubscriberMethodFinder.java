@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.greenrobot.eventbus.Initializer;
+import javax.annotation.Nullable;
 
 class SubscriberMethodFinder {
     /*
@@ -119,7 +121,7 @@ class SubscriberMethodFinder {
         return new FindState();
     }
 
-    private SubscriberInfo getSubscriberInfo(FindState findState) {
+    @Nullable private SubscriberInfo getSubscriberInfo(FindState findState) {
         if (findState.subscriberInfo != null && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
             SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
             if (findState.clazz == superclassInfo.getSubscriberClass()) {
@@ -204,12 +206,12 @@ class SubscriberMethodFinder {
         final Map<String, Class> subscriberClassByMethodKey = new HashMap<>();
         final StringBuilder methodKeyBuilder = new StringBuilder(128);
 
-        Class<?> subscriberClass;
+        @Nullable Class<?> subscriberClass;
         Class<?> clazz;
         boolean skipSuperClasses;
-        SubscriberInfo subscriberInfo;
+        @Nullable SubscriberInfo subscriberInfo;
 
-        void initForSubscriber(Class<?> subscriberClass) {
+        @Initializer void initForSubscriber(Class<?> subscriberClass) {
             this.subscriberClass = clazz = subscriberClass;
             skipSuperClasses = false;
             subscriberInfo = null;
