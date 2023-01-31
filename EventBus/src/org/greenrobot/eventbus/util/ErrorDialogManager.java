@@ -29,6 +29,7 @@ import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import javax.annotation.Nullable;
+import org.greenrobot.eventbus.NullUnmarked;
 
 /**
  * Central class for app that want to use event based error dialogs.<br/>
@@ -130,7 +131,7 @@ public class ErrorDialogManager {
             eventBus.register(this);
         }
 
-        @Override
+        @NullUnmarked @Override
         public void onPause() {
             eventBus.unregister(this);
             super.onPause();
@@ -176,7 +177,7 @@ public class ErrorDialogManager {
     }
 
     /** Must be set by the application. */
-    public static ErrorDialogFragmentFactory<?> factory;
+    @SuppressWarnings("NullAway.Init") public static ErrorDialogFragmentFactory<?> factory;
 
     protected static final String TAG_ERROR_DIALOG = "de.greenrobot.eventbus.error_dialog";
     protected static final String TAG_ERROR_DIALOG_MANAGER = "de.greenrobot.eventbus.error_dialog_manager";

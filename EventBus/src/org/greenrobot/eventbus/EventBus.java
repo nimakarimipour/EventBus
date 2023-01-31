@@ -26,6 +26,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 import javax.annotation.Nullable;
+import org.greenrobot.eventbus.NullUnmarked;
 
 /**
  * EventBus is a central publish/subscribe event system for Java and Android.
@@ -282,7 +283,7 @@ public class EventBus {
      * {@link Subscribe#priority()}). Canceling is restricted to event handling methods running in posting thread
      * {@link ThreadMode#POSTING}.
      */
-    public void cancelEventDelivery(Object event) {
+    @NullUnmarked public void cancelEventDelivery(Object event) {
         PostingThreadState postingState = currentPostingThreadState.get();
         if (!postingState.isPosting) {
             throw new EventBusException(
@@ -428,7 +429,7 @@ public class EventBus {
         return false;
     }
 
-    private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
+    @NullUnmarked private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
         switch (subscription.subscriberMethod.threadMode) {
             case POSTING:
                 invokeSubscriber(subscription, event);
@@ -497,7 +498,7 @@ public class EventBus {
      * subscriber unregistered. This is particularly important for main thread delivery and registrations bound to the
      * live cycle of an Activity or Fragment.
      */
-    void invokeSubscriber(PendingPost pendingPost) {
+    @NullUnmarked void invokeSubscriber(PendingPost pendingPost) {
         Object event = pendingPost.event;
         Subscription subscription = pendingPost.subscription;
         PendingPost.releasePendingPost(pendingPost);
@@ -516,7 +517,7 @@ public class EventBus {
         }
     }
 
-    private void handleSubscriberException(Subscription subscription, @Nullable Object event, Throwable cause) {
+    @NullUnmarked private void handleSubscriberException(Subscription subscription, @Nullable Object event, Throwable cause) {
         if (event instanceof SubscriberExceptionEvent) {
             if (logSubscriberExceptions) {
                 // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log
