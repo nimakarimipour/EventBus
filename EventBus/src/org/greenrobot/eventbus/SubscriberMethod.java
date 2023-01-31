@@ -25,7 +25,7 @@ public class SubscriberMethod {
     final int priority;
     final boolean sticky;
     /** Used for efficient comparison */
-    String methodString;
+    @SuppressWarnings("NullAway.Init") String methodString;
 
     public SubscriberMethod(Method method, Class<?> eventType, ThreadMode threadMode, int priority, boolean sticky) {
         this.method = method;

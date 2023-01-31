@@ -28,6 +28,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.NullUnmarked;
 
 /**
  * Central class for app that want to use event based error dialogs.<br/>
@@ -47,12 +48,12 @@ public class ErrorDialogManager {
 
     public static class SupportManagerFragment extends Fragment {
         protected boolean finishAfterDialog;
-        protected Bundle argumentsForErrorDialog;
+        @SuppressWarnings("NullAway.Init") protected Bundle argumentsForErrorDialog;
         private EventBus eventBus;
         private boolean skipRegisterOnNextResume;
-        private Object executionScope;
+        @SuppressWarnings("NullAway.Init") private Object executionScope;
 
-        @Override
+        @NullUnmarked @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             eventBus = ErrorDialogManager.factory.config.getEventBus();
@@ -118,9 +119,9 @@ public class ErrorDialogManager {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class HoneycombManagerFragment extends android.app.Fragment {
         protected boolean finishAfterDialog;
-        protected Bundle argumentsForErrorDialog;
-        private EventBus eventBus;
-        private Object executionScope;
+        @SuppressWarnings("NullAway.Init") protected Bundle argumentsForErrorDialog;
+        @SuppressWarnings("NullAway.Init") private EventBus eventBus;
+        @SuppressWarnings("NullAway.Init") private Object executionScope;
 
         @Override
         public void onResume() {
@@ -175,7 +176,7 @@ public class ErrorDialogManager {
     }
 
     /** Must be set by the application. */
-    public static ErrorDialogFragmentFactory<?> factory;
+    @SuppressWarnings("NullAway.Init") public static ErrorDialogFragmentFactory<?> factory;
 
     protected static final String TAG_ERROR_DIALOG = "de.greenrobot.eventbus.error_dialog";
     protected static final String TAG_ERROR_DIALOG_MANAGER = "de.greenrobot.eventbus.error_dialog_manager";
@@ -187,12 +188,12 @@ public class ErrorDialogManager {
     public static final String KEY_EVENT_TYPE_ON_CLOSE = "de.greenrobot.eventbus.errordialog.event_type_on_close";
 
     /** Scope is limited to the activity's class. */
-    public static void attachTo(Activity activity) {
+    @NullUnmarked public static void attachTo(Activity activity) {
         attachTo(activity, false, null);
     }
 
     /** Scope is limited to the activity's class. */
-    public static void attachTo(Activity activity, boolean finishAfterDialog) {
+    @NullUnmarked public static void attachTo(Activity activity, boolean finishAfterDialog) {
         attachTo(activity, finishAfterDialog, null);
     }
 

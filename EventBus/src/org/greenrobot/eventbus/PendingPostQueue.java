@@ -15,10 +15,11 @@
  */
 
 package org.greenrobot.eventbus;
+import org.greenrobot.eventbus.NullUnmarked;
 
 final class PendingPostQueue {
-    private PendingPost head;
-    private PendingPost tail;
+    @SuppressWarnings("NullAway.Init") private PendingPost head;
+    @SuppressWarnings("NullAway.Init") private PendingPost tail;
 
     synchronized void enqueue(PendingPost pendingPost) {
         if (pendingPost == null) {
@@ -35,7 +36,7 @@ final class PendingPostQueue {
         notifyAll();
     }
 
-    synchronized PendingPost poll() {
+    @NullUnmarked synchronized PendingPost poll() {
         PendingPost pendingPost = head;
         if (head != null) {
             head = head.next;

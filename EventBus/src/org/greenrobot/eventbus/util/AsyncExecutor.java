@@ -21,6 +21,7 @@ import java.lang.reflect.Constructor;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
+import org.greenrobot.eventbus.NullUnmarked;
 
 /**
  * Executes an {@link RunnableEx} using a thread pool. Thrown exceptions are propagated by posting failure events of any
@@ -31,11 +32,11 @@ import java.util.logging.Level;
 public class AsyncExecutor {
 
     public static class Builder {
-        private Executor threadPool;
-        private Class<?> failureEventType;
-        private EventBus eventBus;
+        @SuppressWarnings("NullAway.Init") private Executor threadPool;
+        @SuppressWarnings("NullAway.Init") private Class<?> failureEventType;
+        @SuppressWarnings("NullAway.Init") private EventBus eventBus;
 
-        private Builder() {
+        @NullUnmarked private Builder() {
         }
 
         public Builder threadPool(Executor threadPool) {
@@ -53,7 +54,7 @@ public class AsyncExecutor {
             return this;
         }
 
-        public AsyncExecutor build() {
+        @NullUnmarked public AsyncExecutor build() {
             return buildForScope(null);
         }
 

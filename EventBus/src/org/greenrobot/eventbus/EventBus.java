@@ -25,6 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
+import org.greenrobot.eventbus.NullUnmarked;
 
 /**
  * EventBus is a central publish/subscribe event system for Java and Android.
@@ -42,7 +43,7 @@ public class EventBus {
     /** Log tag, apps may override it. */
     public static String TAG = "EventBus";
 
-    static volatile EventBus defaultInstance;
+    @SuppressWarnings("NullAway.Init") static volatile EventBus defaultInstance;
 
     private static final EventBusBuilder DEFAULT_BUILDER = new EventBusBuilder();
     private static final Map<Class<?>, List<Class<?>>> eventTypesCache = new HashMap<>();
@@ -109,7 +110,7 @@ public class EventBus {
         this(DEFAULT_BUILDER);
     }
 
-    EventBus(EventBusBuilder builder) {
+    @NullUnmarked EventBus(EventBusBuilder builder) {
         logger = builder.getLogger();
         subscriptionsByEventType = new HashMap<>();
         typesBySubscriber = new HashMap<>();
@@ -149,7 +150,7 @@ public class EventBus {
     }
 
     // Must be called in synchronized block
-    private void subscribe(Object subscriber, SubscriberMethod subscriberMethod) {
+    @NullUnmarked private void subscribe(Object subscriber, SubscriberMethod subscriberMethod) {
         Class<?> eventType = subscriberMethod.eventType;
         Subscription newSubscription = new Subscription(subscriber, subscriberMethod);
         CopyOnWriteArrayList<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
@@ -400,7 +401,7 @@ public class EventBus {
         }
     }
 
-    private boolean postSingleEventForEventType(Object event, PostingThreadState postingState, Class<?> eventClass) {
+    @NullUnmarked private boolean postSingleEventForEventType(Object event, PostingThreadState postingState, Class<?> eventClass) {
         CopyOnWriteArrayList<Subscription> subscriptions;
         synchronized (this) {
             subscriptions = subscriptionsByEventType.get(eventClass);
@@ -546,8 +547,8 @@ public class EventBus {
         final List<Object> eventQueue = new ArrayList<>();
         boolean isPosting;
         boolean isMainThread;
-        Subscription subscription;
-        Object event;
+        @SuppressWarnings("NullAway.Init") Subscription subscription;
+        @SuppressWarnings("NullAway.Init") Object event;
         boolean canceled;
     }
 

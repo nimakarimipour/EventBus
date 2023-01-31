@@ -20,6 +20,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import org.greenrobot.eventbus.NullUnmarked;
 
 /**
  * Factory to allow injecting a more complex exception mapping; typically you would subclass one of {@link Honeycomb} or
@@ -35,7 +36,7 @@ public abstract class ErrorDialogFragmentFactory<T> {
     /**
      * Prepares the fragment's arguments and creates the fragment. May be overridden to provide custom error fragments.
      */
-    protected T prepareErrorFragment(ThrowableFailureEvent event, boolean finishAfterDialog,
+    @NullUnmarked protected T prepareErrorFragment(ThrowableFailureEvent event, boolean finishAfterDialog,
             Bundle argumentsForErrorDialog) {
         if (event.isSuppressErrorUi()) {
             // Show nothing by default

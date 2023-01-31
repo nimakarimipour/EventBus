@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.greenrobot.eventbus.Initializer;
+import org.greenrobot.eventbus.NullUnmarked;
 
 class SubscriberMethodFinder {
     /*
@@ -119,7 +121,7 @@ class SubscriberMethodFinder {
         return new FindState();
     }
 
-    private SubscriberInfo getSubscriberInfo(FindState findState) {
+    @NullUnmarked private SubscriberInfo getSubscriberInfo(FindState findState) {
         if (findState.subscriberInfo != null && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
             SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
             if (findState.clazz == superclassInfo.getSubscriberClass()) {
@@ -207,15 +209,15 @@ class SubscriberMethodFinder {
         Class<?> subscriberClass;
         Class<?> clazz;
         boolean skipSuperClasses;
-        SubscriberInfo subscriberInfo;
+        @SuppressWarnings("NullAway.Init") SubscriberInfo subscriberInfo;
 
-        void initForSubscriber(Class<?> subscriberClass) {
+        @NullUnmarked @Initializer void initForSubscriber(Class<?> subscriberClass) {
             this.subscriberClass = clazz = subscriberClass;
             skipSuperClasses = false;
             subscriberInfo = null;
         }
 
-        void recycle() {
+        @NullUnmarked void recycle() {
             subscriberMethods.clear();
             anyMethodByEventType.clear();
             subscriberClassByMethodKey.clear();
@@ -263,7 +265,7 @@ class SubscriberMethodFinder {
             }
         }
 
-        void moveToSuperclass() {
+        @NullUnmarked void moveToSuperclass() {
             if (skipSuperClasses) {
                 clazz = null;
             } else {
