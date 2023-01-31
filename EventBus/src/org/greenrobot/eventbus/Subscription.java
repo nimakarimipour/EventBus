@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus;
+import org.greenrobot.eventbus.NullUnmarked;
 
 final class Subscription {
     final Object subscriber;
@@ -41,7 +42,7 @@ final class Subscription {
         }
     }
 
-    @Override
+    @NullUnmarked @Override
     public int hashCode() {
         return subscriber.hashCode() + subscriberMethod.methodString.hashCode();
     }

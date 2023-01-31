@@ -29,6 +29,7 @@ import android.support.v4.app.DialogFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import javax.annotation.Nullable;
+import org.greenrobot.eventbus.NullUnmarked;
 
 public class ErrorDialogFragments {
     /** TODO Use config:  Icon res ID to use for all error dialogs. May be configured by each app (optional). */
@@ -48,7 +49,7 @@ public class ErrorDialogFragments {
         return builder.create();
     }
 
-    public static void handleOnClick(DialogInterface dialog, int which, Activity activity, Bundle arguments) {
+    @NullUnmarked public static void handleOnClick(DialogInterface dialog, int which, Activity activity, Bundle arguments) {
         if (EVENT_TYPE_ON_CLICK != null) {
             Object event;
             try {

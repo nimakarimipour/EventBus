@@ -17,6 +17,7 @@ package org.greenrobot.eventbus;
 
 import java.lang.reflect.Method;
 import javax.annotation.Nullable;
+import org.greenrobot.eventbus.NullUnmarked;
 
 /** Used internally by EventBus and generated subscriber indexes. */
 public class SubscriberMethod {
@@ -36,7 +37,7 @@ public class SubscriberMethod {
         this.sticky = sticky;
     }
 
-    @Override
+    @NullUnmarked @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;

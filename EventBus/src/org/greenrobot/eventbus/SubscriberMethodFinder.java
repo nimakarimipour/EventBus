@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.greenrobot.eventbus.Initializer;
 import javax.annotation.Nullable;
+import org.greenrobot.eventbus.NullUnmarked;
 
 class SubscriberMethodFinder {
     /*
@@ -149,7 +150,7 @@ class SubscriberMethodFinder {
         return getMethodsAndRelease(findState);
     }
 
-    private void findUsingReflectionInSingleClass(FindState findState) {
+    @NullUnmarked private void findUsingReflectionInSingleClass(FindState findState) {
         Method[] methods;
         try {
             // This is faster than getMethods, especially when subscribers are fat classes like Activities
@@ -265,7 +266,7 @@ class SubscriberMethodFinder {
             }
         }
 
-        void moveToSuperclass() {
+        @NullUnmarked void moveToSuperclass() {
             if (skipSuperClasses) {
                 clazz = null;
             } else {

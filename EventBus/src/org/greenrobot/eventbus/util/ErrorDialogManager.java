@@ -29,6 +29,7 @@ import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import javax.annotation.Nullable;
+import org.greenrobot.eventbus.NullUnmarked;
 
 /**
  * Central class for app that want to use event based error dialogs.<br/>
@@ -53,7 +54,7 @@ public class ErrorDialogManager {
         private boolean skipRegisterOnNextResume;
         @Nullable private Object executionScope;
 
-        @Override
+        @NullUnmarked @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             eventBus = ErrorDialogManager.factory.config.getEventBus();
@@ -61,7 +62,7 @@ public class ErrorDialogManager {
             skipRegisterOnNextResume = true;
         }
 
-        @Override
+        @NullUnmarked @Override
         public void onResume() {
             super.onResume();
             if (skipRegisterOnNextResume) {
@@ -79,7 +80,7 @@ public class ErrorDialogManager {
             super.onPause();
         }
 
-        public void onEventMainThread(ThrowableFailureEvent event) {
+        @NullUnmarked public void onEventMainThread(ThrowableFailureEvent event) {
             if (!isInExecutionScope(executionScope, event)) {
                 return;
             }
@@ -123,20 +124,20 @@ public class ErrorDialogManager {
         @Nullable private EventBus eventBus;
         @Nullable private Object executionScope;
 
-        @Override
+        @NullUnmarked @Override
         public void onResume() {
             super.onResume();
             eventBus = ErrorDialogManager.factory.config.getEventBus();
             eventBus.register(this);
         }
 
-        @Override
+        @NullUnmarked @Override
         public void onPause() {
             eventBus.unregister(this);
             super.onPause();
         }
 
-        public void onEventMainThread(ThrowableFailureEvent event) {
+        @NullUnmarked public void onEventMainThread(ThrowableFailureEvent event) {
             if (!isInExecutionScope(executionScope, event)) {
                 return;
             }
@@ -239,7 +240,7 @@ public class ErrorDialogManager {
         return isSupport;
     }
 
-    protected static void checkLogException(ThrowableFailureEvent event) {
+    @NullUnmarked protected static void checkLogException(ThrowableFailureEvent event) {
         if (factory.config.logExceptions) {
             String tag = factory.config.tagForLoggingExceptions;
             if (tag == null) {

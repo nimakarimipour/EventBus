@@ -1,0 +1,3 @@
+kind	class	method	param	index	uri	field
+METHOD	org.greenrobot.eventbus.EventBusBuilder	executorService(java.util.concurrent.ExecutorService)	null	null	/Users/nima/Developer/NullAwayFixer/Projects/EventBus/EventBus/src/org/greenrobot/eventbus/EventBusBuilder.java	executorService
+METHOD	org.greenrobot.eventbus.util.ErrorDialogManager$SupportManagerFragment	onCreate(android.os.Bundle)	null	null	/Users/nima/Developer/NullAwayFixer/Projects/EventBus/EventBus/src/org/greenrobot/eventbus/util/ErrorDialogManager.java	eventBus
