@@ -1,5 +1,5 @@
 {
-  "BUILD_COMMAND": "cd /Users/nima/Developer/NullAwayFixer/Projects/EventBus && ./gradlew compileJava",
+  "BUILD_COMMAND": "cd /Users/anonyous/Developer/NullAwayFixer/Projects/EventBus && ./gradlew compileJava",
   "ANNOTATION": {
     "INITIALIZER": "org.greenrobot.eventbus.Initializer",
     "NULLABLE": "javax.annotation.Nullable",
