@@ -75,8 +75,17 @@ uploadArchives {
     }
 }
 
+task("printRootDirPath") {
+    doLast {
+        println("Root directory path: ${rootDir.getAbsolutePath()}")
+    }
+}
 
 import net.ltgt.gradle.errorprone.CheckSeverity
+
+def scanner_path =  "${rootDir.getAbsolutePath()}" +"/out/scanner.xml"
+def nullaway_path =  "${rootDir.absolutePath}/out/checker.xml"
+def annotator_mode = (System.getenv("ANNOTATOR_MODE") != null)
 
 tasks.withType(JavaCompile) {
     // remove the if condition if you want to run NullAway on test code
@@ -85,11 +94,11 @@ tasks.withType(JavaCompile) {
         options.errorprone.disableAllWarnings = true
         options.errorprone {
             check("NullAway", CheckSeverity.ERROR)
-            check("AnnotatorScanner", CheckSeverity.ERROR)
+            check("AnnotatorScanner", annotator_mode ? CheckSeverity.ERROR : CheckSeverity.OFF)
             option("NullAway:AnnotatedPackages", "org.greenrobot.eventbus")
-            option("NullAway:SerializeFixMetadata", "true")
-            option("NullAway:FixSerializationConfigPath", "/tmp/annotator/checker.xml")
-            option("AnnotatorScanner:ConfigPath", "/tmp/annotator/scanner.xml")
+            option("NullAway:SerializeFixMetadata", annotator_mode ? "true" : "false")
+            option("NullAway:FixSerializationConfigPath", nullaway_path)
+            option("AnnotatorScanner:ConfigPath", scanner_path)
         }
     }
     options.compilerArgs << "-Xmaxerrs" << "100000"
