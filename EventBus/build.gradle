@@ -86,6 +86,7 @@ import net.ltgt.gradle.errorprone.CheckSeverity
 def scanner_path =  "${rootDir.getAbsolutePath()}" +"/out/scanner.xml"
 def nullaway_path =  "${rootDir.absolutePath}/out/checker.xml"
 def annotator_mode = (System.getenv("ANNOTATOR_MODE") != null)
+println(annotator_mode)
 
 tasks.withType(JavaCompile) {
     // remove the if condition if you want to run NullAway on test code
