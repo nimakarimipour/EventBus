@@ -22,6 +22,7 @@ dependencies {
     errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
 
     compileOnly "com.uber.nullaway:nullaway-annotations:0.10.10"
+    compileOnly "org.jspecify:jspecify:0.3.0"
 }
 
 repositories {
