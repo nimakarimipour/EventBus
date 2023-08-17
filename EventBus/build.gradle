@@ -22,6 +22,7 @@ dependencies {
     errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
 
     compileOnly "com.uber.nullaway:nullaway-annotations:0.10.10"
+    compileOnly "org.jspecify:jspecify:0.3.0"
 }
 
 repositories {
@@ -87,7 +88,6 @@ def scanner_path =  "${rootDir.getAbsolutePath()}" +"/out/scanner.xml"
 def nullaway_path =  "${rootDir.absolutePath}/out/checker.xml"
 def annotator_mode = (System.getenv("ANNOTATOR_MODE") != null)
 def nullaway_off = (System.getenv("NULLAWAY_OFF") != null)
-println(annotator_mode)
 
 tasks.withType(JavaCompile) {
     // remove the if condition if you want to run NullAway on test code
