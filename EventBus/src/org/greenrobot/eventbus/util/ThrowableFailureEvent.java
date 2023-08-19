@@ -22,7 +22,7 @@ package org.greenrobot.eventbus.util;
 public class ThrowableFailureEvent implements HasExecutionScope {
     protected final Throwable throwable;
     protected final boolean suppressErrorUi;
-    @SuppressWarnings("NullAway.Init") private Object executionContext;
+     private Object executionContext;
 
     public ThrowableFailureEvent(Throwable throwable) {
         this.throwable = throwable;

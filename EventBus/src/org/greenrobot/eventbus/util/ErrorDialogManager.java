@@ -28,7 +28,6 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.NullUnmarked;
 
 /**
  * Central class for app that want to use event based error dialogs.<br/>
@@ -39,21 +38,21 @@ import org.greenrobot.eventbus.NullUnmarked;
  * <li>Use one of {@link #attachTo(Activity)}, {@link #attachTo(Activity, boolean)} or
  * {@link #attachTo(Activity, boolean, Bundle)} in your Activity, typically in onCreate.</li>
  * </ol>
- * 
+ *
  * For more complex mappings, you can supply your own {@link ErrorDialogFragmentFactory}.
- * 
+ *
  * @author Markus
  */
 public class ErrorDialogManager {
 
     public static class SupportManagerFragment extends Fragment {
         protected boolean finishAfterDialog;
-        @SuppressWarnings("NullAway.Init") protected Bundle argumentsForErrorDialog;
+         protected Bundle argumentsForErrorDialog;
         private EventBus eventBus;
         private boolean skipRegisterOnNextResume;
-        @SuppressWarnings("NullAway.Init") private Object executionScope;
+         private Object executionScope;
 
-        @NullUnmarked @Override
+        @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             eventBus = ErrorDialogManager.factory.config.getEventBus();
@@ -119,9 +118,9 @@ public class ErrorDialogManager {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class HoneycombManagerFragment extends android.app.Fragment {
         protected boolean finishAfterDialog;
-        @SuppressWarnings("NullAway.Init") protected Bundle argumentsForErrorDialog;
-        @SuppressWarnings("NullAway.Init") private EventBus eventBus;
-        @SuppressWarnings("NullAway.Init") private Object executionScope;
+         protected Bundle argumentsForErrorDialog;
+         private EventBus eventBus;
+         private Object executionScope;
 
         @Override
         public void onResume() {
@@ -176,7 +175,7 @@ public class ErrorDialogManager {
     }
 
     /** Must be set by the application. */
-    @SuppressWarnings("NullAway.Init") public static ErrorDialogFragmentFactory<?> factory;
+     public static ErrorDialogFragmentFactory<?> factory;
 
     protected static final String TAG_ERROR_DIALOG = "de.greenrobot.eventbus.error_dialog";
     protected static final String TAG_ERROR_DIALOG_MANAGER = "de.greenrobot.eventbus.error_dialog_manager";
@@ -188,12 +187,12 @@ public class ErrorDialogManager {
     public static final String KEY_EVENT_TYPE_ON_CLOSE = "de.greenrobot.eventbus.errordialog.event_type_on_close";
 
     /** Scope is limited to the activity's class. */
-    @NullUnmarked public static void attachTo(Activity activity) {
+    public static void attachTo(Activity activity) {
         attachTo(activity, false, null);
     }
 
     /** Scope is limited to the activity's class. */
-    @NullUnmarked public static void attachTo(Activity activity, boolean finishAfterDialog) {
+    public static void attachTo(Activity activity, boolean finishAfterDialog) {
         attachTo(activity, finishAfterDialog, null);
     }
 
@@ -202,7 +201,7 @@ public class ErrorDialogManager {
         Object executionScope = activity.getClass();
         attachTo(activity, executionScope, finishAfterDialog, argumentsForErrorDialog);
     }
-    
+
     public static void attachTo(Activity activity, Object executionScope, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
         if (factory == null) {
             throw new RuntimeException("You must set the static factory field to configure error dialogs for your app.");

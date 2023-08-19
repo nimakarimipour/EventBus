@@ -19,7 +19,6 @@ import android.os.Looper;
 import org.greenrobot.eventbus.android.AndroidLogger;
 
 import java.util.logging.Level;
-import org.greenrobot.eventbus.NullUnmarked;
 
 public interface Logger {
 
@@ -71,7 +70,7 @@ public interface Logger {
                     new Logger.SystemOutLogger();
         }
 
-        @NullUnmarked static Object getAndroidMainLooperOrNull() {
+        static Object getAndroidMainLooperOrNull() {
             try {
                 return Looper.getMainLooper();
             } catch (RuntimeException e) {

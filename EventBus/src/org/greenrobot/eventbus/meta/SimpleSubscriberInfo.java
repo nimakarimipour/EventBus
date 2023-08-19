@@ -16,7 +16,6 @@
 package org.greenrobot.eventbus.meta;
 
 import org.greenrobot.eventbus.SubscriberMethod;
-import org.greenrobot.eventbus.NullUnmarked;
 
 /**
  * Uses {@link SubscriberMethodInfo} objects to create {@link org.greenrobot.eventbus.SubscriberMethod} objects on demand.
@@ -25,7 +24,7 @@ public class SimpleSubscriberInfo extends AbstractSubscriberInfo {
 
     private final SubscriberMethodInfo[] methodInfos;
 
-    @NullUnmarked public SimpleSubscriberInfo(Class subscriberClass, boolean shouldCheckSuperclass, SubscriberMethodInfo[] methodInfos) {
+    public SimpleSubscriberInfo(Class subscriberClass, boolean shouldCheckSuperclass, SubscriberMethodInfo[] methodInfos) {
         super(subscriberClass, null, shouldCheckSuperclass);
         this.methodInfos = methodInfos;
     }

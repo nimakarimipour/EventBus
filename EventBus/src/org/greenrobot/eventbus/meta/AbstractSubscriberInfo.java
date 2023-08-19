@@ -20,7 +20,6 @@ import org.greenrobot.eventbus.SubscriberMethod;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Method;
-import org.greenrobot.eventbus.NullUnmarked;
 
 /** Base class for generated subscriber meta info classes created by annotation processing. */
 public abstract class AbstractSubscriberInfo implements SubscriberInfo {
@@ -40,7 +39,7 @@ public abstract class AbstractSubscriberInfo implements SubscriberInfo {
         return subscriberClass;
     }
 
-    @NullUnmarked @Override
+    @Override
     public SubscriberInfo getSuperSubscriberInfo() {
         if(superSubscriberInfoClass == null) {
             return null;

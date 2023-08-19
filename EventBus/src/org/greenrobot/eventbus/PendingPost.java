@@ -15,24 +15,22 @@
  */
 package org.greenrobot.eventbus;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import org.greenrobot.eventbus.NullUnmarked;
 
 final class PendingPost {
     private final static List<PendingPost> pendingPostPool = new ArrayList<PendingPost>();
 
     Object event;
     Subscription subscription;
-    @SuppressWarnings("NullAway.Init") PendingPost next;
+     PendingPost next;
 
     private PendingPost(Object event, Subscription subscription) {
         this.event = event;
         this.subscription = subscription;
     }
 
-    @NullUnmarked static PendingPost obtainPendingPost(Subscription subscription, Object event) {
+    static PendingPost obtainPendingPost(Subscription subscription, Object event) {
         synchronized (pendingPostPool) {
             int size = pendingPostPool.size();
             if (size > 0) {
@@ -46,7 +44,7 @@ final class PendingPost {
         return new PendingPost(event, subscription);
     }
 
-    @NullUnmarked static void releasePendingPost(PendingPost pendingPost) {
+    static void releasePendingPost(PendingPost pendingPost) {
         pendingPost.event = null;
         pendingPost.subscription = null;
         pendingPost.next = null;

@@ -27,11 +27,11 @@ public class ErrorDialogConfig {
     final int defaultErrorMsgId;
     final ExceptionToResourceMapping mapping;
 
-    @SuppressWarnings("NullAway.Init") EventBus eventBus;
+     EventBus eventBus;
     boolean logExceptions = true;
-    @SuppressWarnings("NullAway.Init") String tagForLoggingExceptions;
+     String tagForLoggingExceptions;
     int defaultDialogIconId;
-    @SuppressWarnings("NullAway.Init") Class<?> defaultEventTypeOnDialogClosed;
+     Class<?> defaultEventTypeOnDialogClosed;
 
     public ErrorDialogConfig(Resources resources, int defaultTitleId, int defaultMsgId) {
         this.resources = resources;

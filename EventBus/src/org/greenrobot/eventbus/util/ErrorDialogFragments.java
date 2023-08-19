@@ -34,7 +34,7 @@ public class ErrorDialogFragments {
     public static int ERROR_DIALOG_ICON = 0;
 
     /** TODO Use config:  Event class to be fired on dismissing the dialog by the user. May be configured by each app. */
-    @SuppressWarnings("NullAway.Init") public static Class<?> EVENT_TYPE_ON_CLICK;
+     public static Class<?> EVENT_TYPE_ON_CLICK;
 
     public static Dialog createDialog(Context context, Bundle arguments, OnClickListener onClickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
