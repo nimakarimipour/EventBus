@@ -15,11 +15,14 @@ dependencies {
     compileOnly 'com.google.android:support-v4:r7'
 
     annotationProcessor "com.uber.nullaway:nullaway:0.10.8"
-    annotationProcessor "edu.ucr.cs.riple.annotator:annotator-scanner:1.3.6"
+    annotationProcessor "edu.ucr.cs.riple.annotator:annotator-scanner:1.3.6-alpha-5"
 
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
     errorprone "com.google.errorprone:error_prone_core:2.3.2"
     errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
+
+    compileOnly "com.uber.nullaway:nullaway-annotations:0.10.10"
+    compileOnly "org.jspecify:jspecify:0.3.0"
 }
 
 repositories {
@@ -41,7 +44,7 @@ apply from: rootProject.file("gradle/publish.gradle")
 javadoc {
     failOnError = false
     title = "EventBus ${version} API"
-	options.bottom = 'Available under the Apache License, Version 2.0 - <i>Copyright &#169; 2012-2020 <a href="https://greenrobot.org">greenrobot.org</a>. All Rights Reserved.</i>'
+    options.bottom = 'Available under the Apache License, Version 2.0 - <i>Copyright &#169; 2012-2020 <a href="https://greenrobot.org">greenrobot.org</a>. All Rights Reserved.</i>'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -66,15 +69,25 @@ uploadArchives {
             // Common setup is defined in publish.gradle.
 
             pom.project {
-               name 'EventBus'
-               description 'EventBus is a publish/subscribe event bus optimized for Android.'
-           }
+                name 'EventBus'
+                description 'EventBus is a publish/subscribe event bus optimized for Android.'
+            }
         }
     }
 }
 
+task("printRootDirPath") {
+    doLast {
+        println("Root directory path: ${rootDir.getAbsolutePath()}")
+    }
+}
 
 import net.ltgt.gradle.errorprone.CheckSeverity
+
+def scanner_path =  "${rootDir.getAbsolutePath()}" +"/out/scanner.xml"
+def nullaway_path =  "${rootDir.absolutePath}/out/checker.xml"
+def annotator_mode = (System.getenv("ANNOTATOR_MODE") != null)
+def nullaway_off = (System.getenv("NULLAWAY_OFF") != null)
 
 tasks.withType(JavaCompile) {
     // remove the if condition if you want to run NullAway on test code
@@ -82,12 +95,12 @@ tasks.withType(JavaCompile) {
         options.errorprone.disableAllChecks = true
         options.errorprone.disableAllWarnings = true
         options.errorprone {
-            check("NullAway", CheckSeverity.ERROR)
-            check("AnnotatorScanner", CheckSeverity.OFF)
+            check("NullAway", nullaway_off ? CheckSeverity.OFF : CheckSeverity.ERROR)
+            check("AnnotatorScanner", annotator_mode ? CheckSeverity.ERROR : CheckSeverity.OFF)
             option("NullAway:AnnotatedPackages", "org.greenrobot.eventbus")
-            option("NullAway:SerializeFixMetadata", "false")
-            option("NullAway:FixSerializationConfigPath", "/tmp/NullAwayFix/nullaway.xml")
-            option("AnnotatorScanner:ConfigPath", "/tmp/NullAwayFix/scanner.xml")
+            option("NullAway:SerializeFixMetadata", annotator_mode ? "true" : "false")
+            option("NullAway:FixSerializationConfigPath", nullaway_path)
+            option("AnnotatorScanner:ConfigPath", scanner_path)
         }
     }
     options.compilerArgs << "-Xmaxerrs" << "100000"
