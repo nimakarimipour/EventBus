@@ -28,6 +28,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
+import javax.annotation.Nullable;
 
 /**
  * Central class for app that want to use event based error dialogs.<br/>
@@ -47,10 +48,10 @@ public class ErrorDialogManager {
 
     public static class SupportManagerFragment extends Fragment {
         protected boolean finishAfterDialog;
-        protected Bundle argumentsForErrorDialog;
+        @Nullable protected Bundle argumentsForErrorDialog;
         private EventBus eventBus;
         private boolean skipRegisterOnNextResume;
-        private Object executionScope;
+        @Nullable private Object executionScope;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -118,9 +119,9 @@ public class ErrorDialogManager {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class HoneycombManagerFragment extends android.app.Fragment {
         protected boolean finishAfterDialog;
-        protected Bundle argumentsForErrorDialog;
-        private EventBus eventBus;
-        private Object executionScope;
+        @Nullable protected Bundle argumentsForErrorDialog;
+        @Nullable private EventBus eventBus;
+        @Nullable private Object executionScope;
 
         @Override
         public void onResume() {
@@ -197,7 +198,7 @@ public class ErrorDialogManager {
     }
 
     /** Scope is limited to the activity's class. */
-    public static void attachTo(Activity activity, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
+    public static void attachTo(Activity activity, boolean finishAfterDialog, @Nullable Bundle argumentsForErrorDialog) {
         Object executionScope = activity.getClass();
         attachTo(activity, executionScope, finishAfterDialog, argumentsForErrorDialog);
     }
@@ -248,7 +249,7 @@ public class ErrorDialogManager {
         }
     }
 
-    private static boolean isInExecutionScope(Object executionScope, ThrowableFailureEvent event) {
+    private static boolean isInExecutionScope(@Nullable Object executionScope, ThrowableFailureEvent event) {
         if (event != null) {
             Object eventExecutionScope = event.getExecutionScope();
             if (eventExecutionScope != null && !eventExecutionScope.equals(executionScope)) {
