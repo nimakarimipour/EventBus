@@ -28,6 +28,8 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
+import javax.annotation.Nullable;
+import org.jspecify.annotations.NullUnmarked;
 
 /**
  * Central class for app that want to use event based error dialogs.<br/>
@@ -47,10 +49,10 @@ public class ErrorDialogManager {
 
     public static class SupportManagerFragment extends Fragment {
         protected boolean finishAfterDialog;
-        protected Bundle argumentsForErrorDialog;
+        @Nullable protected Bundle argumentsForErrorDialog;
         private EventBus eventBus;
         private boolean skipRegisterOnNextResume;
-        private Object executionScope;
+        @Nullable private Object executionScope;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +103,7 @@ public class ErrorDialogManager {
         }
 
         public static void attachTo(Activity activity, Object executionScope, boolean finishAfterDialog,
-                Bundle argumentsForErrorDialog) {
+                @Nullable Bundle argumentsForErrorDialog) {
             FragmentManager fm = ((FragmentActivity) activity).getSupportFragmentManager();
             SupportManagerFragment fragment = (SupportManagerFragment) fm.findFragmentByTag(TAG_ERROR_DIALOG_MANAGER);
             if (fragment == null) {
@@ -118,9 +120,9 @@ public class ErrorDialogManager {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class HoneycombManagerFragment extends android.app.Fragment {
         protected boolean finishAfterDialog;
-        protected Bundle argumentsForErrorDialog;
-        private EventBus eventBus;
-        private Object executionScope;
+        @Nullable protected Bundle argumentsForErrorDialog;
+        @Nullable private EventBus eventBus;
+        @Nullable private Object executionScope;
 
         @Override
         public void onResume() {
@@ -129,7 +131,7 @@ public class ErrorDialogManager {
             eventBus.register(this);
         }
 
-        @Override
+        @NullUnmarked @Override
         public void onPause() {
             eventBus.unregister(this);
             super.onPause();
@@ -159,7 +161,7 @@ public class ErrorDialogManager {
             }
         }
 
-        public static void attachTo(Activity activity, Object executionScope, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
+        public static void attachTo(Activity activity, Object executionScope, boolean finishAfterDialog, @Nullable Bundle argumentsForErrorDialog) {
             android.app.FragmentManager fm = activity.getFragmentManager();
             HoneycombManagerFragment fragment = (HoneycombManagerFragment) fm
                     .findFragmentByTag(TAG_ERROR_DIALOG_MANAGER);
@@ -175,7 +177,7 @@ public class ErrorDialogManager {
     }
 
     /** Must be set by the application. */
-    public static ErrorDialogFragmentFactory<?> factory;
+    @SuppressWarnings("NullAway.Init") public static ErrorDialogFragmentFactory<?> factory;
 
     protected static final String TAG_ERROR_DIALOG = "de.greenrobot.eventbus.error_dialog";
     protected static final String TAG_ERROR_DIALOG_MANAGER = "de.greenrobot.eventbus.error_dialog_manager";
@@ -197,12 +199,12 @@ public class ErrorDialogManager {
     }
 
     /** Scope is limited to the activity's class. */
-    public static void attachTo(Activity activity, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
+    public static void attachTo(Activity activity, boolean finishAfterDialog, @Nullable Bundle argumentsForErrorDialog) {
         Object executionScope = activity.getClass();
         attachTo(activity, executionScope, finishAfterDialog, argumentsForErrorDialog);
     }
     
-    public static void attachTo(Activity activity, Object executionScope, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
+    public static void attachTo(Activity activity, Object executionScope, boolean finishAfterDialog, @Nullable Bundle argumentsForErrorDialog) {
         if (factory == null) {
             throw new RuntimeException("You must set the static factory field to configure error dialogs for your app.");
         }
@@ -248,7 +250,7 @@ public class ErrorDialogManager {
         }
     }
 
-    private static boolean isInExecutionScope(Object executionScope, ThrowableFailureEvent event) {
+    private static boolean isInExecutionScope(@Nullable Object executionScope, ThrowableFailureEvent event) {
         if (event != null) {
             Object eventExecutionScope = event.getExecutionScope();
             if (eventExecutionScope != null && !eventExecutionScope.equals(executionScope)) {

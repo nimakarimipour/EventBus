@@ -19,6 +19,7 @@ import android.os.Looper;
 import org.greenrobot.eventbus.android.AndroidLogger;
 
 import java.util.logging.Level;
+import javax.annotation.Nullable;
 
 public interface Logger {
 
@@ -70,7 +71,7 @@ public interface Logger {
                     new Logger.SystemOutLogger();
         }
 
-        static Object getAndroidMainLooperOrNull() {
+        @Nullable static Object getAndroidMainLooperOrNull() {
             try {
                 return Looper.getMainLooper();
             } catch (RuntimeException e) {

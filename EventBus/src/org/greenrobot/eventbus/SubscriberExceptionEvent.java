@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus;
+import javax.annotation.Nullable;
 
 /**
  * This Event is posted by EventBus when an exception occurs inside a subscriber's event handling method.
@@ -28,12 +29,12 @@ public final class SubscriberExceptionEvent {
     public final Throwable throwable;
 
     /** The original event that could not be delivered to any subscriber. */
-    public final Object causingEvent;
+    @Nullable public final Object causingEvent;
 
     /** The subscriber that threw the Throwable. */
     public final Object causingSubscriber;
 
-    public SubscriberExceptionEvent(EventBus eventBus, Throwable throwable, Object causingEvent,
+    public SubscriberExceptionEvent(EventBus eventBus, Throwable throwable, @Nullable Object causingEvent,
             Object causingSubscriber) {
         this.eventBus = eventBus;
         this.throwable = throwable;
