@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><scanner><method active="true"/><field active="true"/><call active="true"/><class active="true"/><uuid>c0d94005-07d1-488a-ba66-298ac06d16e5</uuid><path>/Users/nima/Desktop/docker/benchmarks/eventbus/out/0</path><processor><LOMBOK active="true"/></processor><annotations/></scanner>
+=======
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><scanner><method active="true"/><field active="true"/><call active="true"/><class active="true"/><uuid>ccb79f35-db54-467c-b33d-85d0e1a1b80d</uuid><path>/home/nima/Desktop/docker/benchmarks/eventbus/out/0</path><processor><LOMBOK active="true"/></processor><annotations/></scanner>
+>>>>>>> base

@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><serialization><suggest active="true" enclosing="true"/><fieldInitInfo active="false"/><path>/Users/nima/Desktop/docker/benchmarks/eventbus/out/0</path><uuid>976ecb1e-e19d-43ca-9130-0fa322711b2c</uuid></serialization>
+=======
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><serialization><suggest active="true" enclosing="true"/><fieldInitInfo active="false"/><path>/home/nima/Desktop/docker/benchmarks/eventbus/out/0</path><uuid>a44f838e-6f79-4aa0-a4a5-a124bd547597</uuid></serialization>
+>>>>>>> base
