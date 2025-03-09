@@ -1,0 +1,29 @@
+====================
+Type='FIELD_NO_INIT', message='@NonNull static field factory not initialized'
+/home/nima/Developer/nullness-benchmarks/EventBus/EventBus/src/org/greenrobot/eventbus/util/ErrorDialogManager.java:189
+  public static ErrorDialogFragmentFactory<?> factory;
+Log:
+---NullAway.lambda$resolveRemainingErrors$16---
+==============================
+---NullAway.lambda$resolveRemainingErrors$16---
+TOP LEVEL CALL TO FIX ERROR: Type='FIELD_NO_INIT', message='@NonNull static field factory not initialized'
+/home/nima/Developer/nullness-benchmarks/EventBus/EventBus/src/org/greenrobot/eventbus/util/ErrorDialogManager.java:189
+  public static ErrorDialogFragmentFactory<?> factory;
+---NullAwayCodeFix.fix---
+Fixing error: Type='FIELD_NO_INIT', message='@NonNull static field factory not initialized'
+/home/nima/Developer/nullness-benchmarks/EventBus/EventBus/src/org/greenrobot/eventbus/util/ErrorDialogManager.java:189
+  public static ErrorDialogFragmentFactory<?> factory;
+---NullAway.lambda$resolveRemainingErrors$16---
+--------Exception occurred in computing fix--------
+java.lang.IllegalArgumentException: Error type not supported to extract values from: FIELD_NO_INIT: @NonNull static field factory not initialized
+	at edu.ucr.cs.riple.core.checkers.nullaway.NullAwayError.extractPlaceHolderValue(NullAwayError.java:182) ~[main/:?]
+	at edu.ucr.cs.riple.core.checkers.nullaway.codefix.NullAwayCodeFix.resolveUninitializedField(NullAwayCodeFix.java:298) ~[main/:?]
+	at edu.ucr.cs.riple.core.checkers.nullaway.codefix.NullAwayCodeFix.fix(NullAwayCodeFix.java:138) ~[main/:?]
+	at edu.ucr.cs.riple.core.checkers.nullaway.NullAway.lambda$resolveRemainingErrors$16(NullAway.java:402) ~[main/:?]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541) ~[?:?]
+	at edu.ucr.cs.riple.core.checkers.nullaway.NullAway.lambda$resolveRemainingErrors$17(NullAway.java:388) ~[main/:?]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1337) [?:?]
+	at edu.ucr.cs.riple.core.checkers.nullaway.NullAway.resolveRemainingErrors(NullAway.java:386) [main/:?]
+	at edu.ucr.cs.riple.core.Annotator.annotate(Annotator.java:130) [main/:?]
+	at edu.ucr.cs.riple.core.Annotator.start(Annotator.java:87) [main/:?]
+	at edu.ucr.cs.riple.core.Main.main(Main.java:150) [main/:?]
