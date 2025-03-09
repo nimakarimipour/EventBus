@@ -75,9 +75,9 @@ uploadArchives {
     }
 }
 
-
+def scanner_path = project.rootProject.projectDir.toString() + "/annotator-out/scanner.xml"
+def nullaway_path = project.rootProject.projectDir.toString() + "/annotator-out/nullaway.xml"
 import net.ltgt.gradle.errorprone.CheckSeverity
-
 tasks.withType(JavaCompile) {
     // remove the if condition if you want to run NullAway on test code
     if (!name.toLowerCase().contains("test")) {
@@ -88,10 +88,11 @@ tasks.withType(JavaCompile) {
             check("AnnotatorScanner", CheckSeverity.ERROR)
             option("NullAway:AnnotatedPackages", "org.greenrobot.eventbus")
             option("NullAway:SerializeFixMetadata", "true")
-            option("NullAway:FixSerializationConfigPath", "/tmp/annotator/checker.xml")
-            option("AnnotatorScanner:ConfigPath", "/tmp/annotator/scanner.xml")
+            option("NullAway:FixSerializationConfigPath", nullaway_path)
+            option("AnnotatorScanner:ConfigPath", scanner_path)
         }
     }
     options.compilerArgs << "-Xmaxerrs" << "100000"
     options.compilerArgs << "-Xmaxwarns" << "100000"
 }
+

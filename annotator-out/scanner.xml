@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<scanner>
+    <serialization active="true"/>
+    <uuid>128f3092-42ea-4aee-b30f-40bb285e96e4</uuid>
+    <path>/home/nima/Developer/nullness-benchmarks/EventBus/annotator-out/0</path>
+    <processor>
+        <LOMBOK active="true"/>
+    </processor>
+    <annotations/>
+    <annotatedPackages>netflix.eureka</annotatedPackages>
+</scanner>
