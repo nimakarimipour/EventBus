@@ -447,10 +447,8 @@ public class EventBus {
       case MAIN:
         if (isMainThread) {
           invokeSubscriber(subscription, event);
-        } else if (mainThreadPoster != null) {
-          mainThreadPoster.enqueue(subscription, event);
         } else {
-          throw new IllegalStateException("mainThreadPoster is not initialized.");
+          mainThreadPoster.enqueue(subscription, event);
         }
         break;
       case MAIN_ORDERED:
