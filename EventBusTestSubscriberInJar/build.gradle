@@ -9,7 +9,7 @@ configurations {
 }
 
 dependencies {
-    compile project(':eventbus')
+    compileOnly project(':eventbus')
     provided project(':eventbus-annotation-processor')
 }
 

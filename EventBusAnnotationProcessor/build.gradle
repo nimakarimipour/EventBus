@@ -27,7 +27,6 @@ sourceSets {
     }
 }
 
-apply from: rootProject.file("gradle/publish.gradle")
 
 javadoc {
     title = "EventBus Annotation Processor ${version} API"
@@ -48,17 +47,4 @@ artifacts {
     archives jar
     archives javadocJar
     archives sourcesJar
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            // Common setup is defined in publish.gradle.
-
-            pom.project {
-                name 'EventBus Annotation Processor'
-                description 'Precompiler for EventBus Annotations.'
-            }
-        }
-    }
 }
