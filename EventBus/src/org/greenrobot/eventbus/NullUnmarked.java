@@ -1,4 +1,3 @@
 package org.greenrobot.eventbus;
 
-public @interface NullUnmarked {
-}
+public @interface NullUnmarked {}

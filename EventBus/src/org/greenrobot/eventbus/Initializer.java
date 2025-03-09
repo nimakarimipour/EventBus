@@ -1,4 +1,3 @@
 package org.greenrobot.eventbus;
 
-public @interface Initializer {
-}
+public @interface Initializer {}
