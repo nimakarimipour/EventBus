@@ -15,9 +15,7 @@
  */
 package org.greenrobot.eventbus.meta;
 
-import javax.annotation.Nullable;
-
 /** Interface for generated indexes. */
 public interface SubscriberInfoIndex {
-  SubscriberInfo getSubscriberInfo(@Nullable Class<?> subscriberClass);
+  SubscriberInfo getSubscriberInfo(Class<?> subscriberClass);
 }
