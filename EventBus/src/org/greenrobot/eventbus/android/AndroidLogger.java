@@ -17,6 +17,7 @@ package org.greenrobot.eventbus.android;
 
 import android.util.Log;
 import java.util.logging.Level;
+import javax.annotation.Nullable;
 import org.greenrobot.eventbus.Logger;
 
 public class AndroidLogger implements Logger {
@@ -49,7 +50,7 @@ public class AndroidLogger implements Logger {
     }
   }
 
-  public void log(Level level, String msg, Throwable th) {
+  public void log(Level level, String msg, @Nullable Throwable th) {
     if (level != Level.OFF) {
       // That's how Log does it internally
       Log.println(mapLevel(level), tag, msg + "\n" + Log.getStackTraceString(th));

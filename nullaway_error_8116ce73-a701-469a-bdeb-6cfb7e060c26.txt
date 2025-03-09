@@ -1,4 +1,0 @@
-/home/nima/Developer/nullness-benchmarks/EventBus/EventBus/src/org/greenrobot/eventbus/PendingPostQueue.java:20: error: [NullAway] @NonNull field head not initialized
-    private PendingPost head;
-                        ^
-    (see http://t.uber.com/nullaway )

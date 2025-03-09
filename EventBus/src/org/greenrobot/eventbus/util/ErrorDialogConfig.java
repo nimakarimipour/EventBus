@@ -18,6 +18,7 @@ package org.greenrobot.eventbus.util;
 
 import android.content.res.Resources;
 import android.util.Log;
+import javax.annotation.Nullable;
 import org.greenrobot.eventbus.EventBus;
 
 public class ErrorDialogConfig {
@@ -26,11 +27,11 @@ public class ErrorDialogConfig {
   final int defaultErrorMsgId;
   final ExceptionToResourceMapping mapping;
 
-  EventBus eventBus;
+  @Nullable EventBus eventBus;
   boolean logExceptions = true;
-  String tagForLoggingExceptions;
+  @Nullable String tagForLoggingExceptions;
   int defaultDialogIconId;
-  Class<?> defaultEventTypeOnDialogClosed;
+  @Nullable Class<?> defaultEventTypeOnDialogClosed;
 
   public ErrorDialogConfig(Resources resources, int defaultTitleId, int defaultMsgId) {
     this.resources = resources;

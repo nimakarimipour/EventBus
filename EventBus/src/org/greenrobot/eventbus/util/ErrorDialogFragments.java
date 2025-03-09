@@ -26,6 +26,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import javax.annotation.Nullable;
 import org.greenrobot.eventbus.EventBus;
 
 public class ErrorDialogFragments {
@@ -39,7 +40,7 @@ public class ErrorDialogFragments {
    * TODO Use config: Event class to be fired on dismissing the dialog by the user. May be
    * configured by each app.
    */
-  public static Class<?> EVENT_TYPE_ON_CLICK;
+  @Nullable public static Class<?> EVENT_TYPE_ON_CLICK;
 
   public static Dialog createDialog(
       Context context, Bundle arguments, OnClickListener onClickListener) {

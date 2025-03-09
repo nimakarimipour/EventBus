@@ -26,6 +26,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import javax.annotation.Nullable;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -48,10 +49,10 @@ public class ErrorDialogManager {
 
   public static class SupportManagerFragment extends Fragment {
     protected boolean finishAfterDialog;
-    protected Bundle argumentsForErrorDialog;
+    @Nullable protected Bundle argumentsForErrorDialog;
     private EventBus eventBus;
     private boolean skipRegisterOnNextResume;
-    private Object executionScope;
+    @Nullable private Object executionScope;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,7 +107,7 @@ public class ErrorDialogManager {
         Activity activity,
         Object executionScope,
         boolean finishAfterDialog,
-        Bundle argumentsForErrorDialog) {
+        @Nullable Bundle argumentsForErrorDialog) {
       FragmentManager fm = ((FragmentActivity) activity).getSupportFragmentManager();
       SupportManagerFragment fragment =
           (SupportManagerFragment) fm.findFragmentByTag(TAG_ERROR_DIALOG_MANAGER);
@@ -124,9 +125,9 @@ public class ErrorDialogManager {
   @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   public static class HoneycombManagerFragment extends android.app.Fragment {
     protected boolean finishAfterDialog;
-    protected Bundle argumentsForErrorDialog;
-    private EventBus eventBus;
-    private Object executionScope;
+    @Nullable protected Bundle argumentsForErrorDialog;
+    @Nullable private EventBus eventBus;
+    @Nullable private Object executionScope;
 
     @Override
     public void onResume() {
@@ -170,7 +171,7 @@ public class ErrorDialogManager {
         Activity activity,
         Object executionScope,
         boolean finishAfterDialog,
-        Bundle argumentsForErrorDialog) {
+        @Nullable Bundle argumentsForErrorDialog) {
       android.app.FragmentManager fm = activity.getFragmentManager();
       HoneycombManagerFragment fragment =
           (HoneycombManagerFragment) fm.findFragmentByTag(TAG_ERROR_DIALOG_MANAGER);
@@ -212,7 +213,7 @@ public class ErrorDialogManager {
 
   /** Scope is limited to the activity's class. */
   public static void attachTo(
-      Activity activity, boolean finishAfterDialog, Bundle argumentsForErrorDialog) {
+      Activity activity, boolean finishAfterDialog, @Nullable Bundle argumentsForErrorDialog) {
     Object executionScope = activity.getClass();
     attachTo(activity, executionScope, finishAfterDialog, argumentsForErrorDialog);
   }
@@ -221,7 +222,7 @@ public class ErrorDialogManager {
       Activity activity,
       Object executionScope,
       boolean finishAfterDialog,
-      Bundle argumentsForErrorDialog) {
+      @Nullable Bundle argumentsForErrorDialog) {
     if (factory == null) {
       throw new RuntimeException(
           "You must set the static factory field to configure error dialogs for your app.");
@@ -272,7 +273,8 @@ public class ErrorDialogManager {
     }
   }
 
-  private static boolean isInExecutionScope(Object executionScope, ThrowableFailureEvent event) {
+  private static boolean isInExecutionScope(
+      @Nullable Object executionScope, ThrowableFailureEvent event) {
     if (event != null) {
       Object eventExecutionScope = event.getExecutionScope();
       if (eventExecutionScope != null && !eventExecutionScope.equals(executionScope)) {

@@ -15,10 +15,12 @@
  */
 package org.greenrobot.eventbus.util;
 
+import com.uber.nullaway.annotations.Initializer;
 import java.lang.reflect.Constructor;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
+import javax.annotation.Nullable;
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -55,7 +57,8 @@ public class AsyncExecutor {
       return buildForScope(null);
     }
 
-    public AsyncExecutor buildForScope(Object executionContext) {
+    @Initializer
+    public AsyncExecutor buildForScope(@Nullable Object executionContext) {
       if (eventBus == null) {
         eventBus = EventBus.getDefault();
       }
@@ -85,10 +88,10 @@ public class AsyncExecutor {
   private final Executor threadPool;
   private final Constructor<?> failureEventConstructor;
   private final EventBus eventBus;
-  private final Object scope;
+  @Nullable private final Object scope;
 
   private AsyncExecutor(
-      Executor threadPool, EventBus eventBus, Class<?> failureEventType, Object scope) {
+      Executor threadPool, EventBus eventBus, Class<?> failureEventType, @Nullable Object scope) {
     this.threadPool = threadPool;
     this.eventBus = eventBus;
     this.scope = scope;

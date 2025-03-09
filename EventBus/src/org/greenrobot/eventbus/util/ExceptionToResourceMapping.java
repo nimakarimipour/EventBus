@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Level;
+import javax.annotation.Nullable;
 import org.greenrobot.eventbus.Logger;
 
 /**
@@ -37,6 +38,7 @@ public class ExceptionToResourceMapping {
   }
 
   /** Looks at the exception and its causes trying to find an ID. */
+  @Nullable
   public Integer mapThrowable(final Throwable throwable) {
     Throwable throwableToCheck = throwable;
     int depthToGo = 20;
@@ -59,6 +61,7 @@ public class ExceptionToResourceMapping {
   }
 
   /** Mapping without checking the cause (done in mapThrowable). */
+  @Nullable
   protected Integer mapThrowableFlat(Throwable throwable) {
     Class<? extends Throwable> throwableClass = throwable.getClass();
     Integer resId = throwableToMsgIdMap.get(throwableClass);

@@ -1,0 +1,4 @@
+/home/nima/Developer/nullness-benchmarks/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:303: error: [NullAway] dereferenced expression postingState.subscription is @Nullable
+    } else if (postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+                                        ^
+    (see http://t.uber.com/nullaway )

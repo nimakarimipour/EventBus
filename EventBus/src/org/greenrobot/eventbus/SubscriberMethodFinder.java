@@ -15,6 +15,7 @@
  */
 package org.greenrobot.eventbus;
 
+import com.uber.nullaway.annotations.Initializer;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.Nullable;
 import org.greenrobot.eventbus.meta.SubscriberInfo;
 import org.greenrobot.eventbus.meta.SubscriberInfoIndex;
 
@@ -39,7 +41,7 @@ class SubscriberMethodFinder {
   private static final Map<Class<?>, List<SubscriberMethod>> METHOD_CACHE =
       new ConcurrentHashMap<>();
 
-  private List<SubscriberInfoIndex> subscriberInfoIndexes;
+  @Nullable private List<SubscriberInfoIndex> subscriberInfoIndexes;
   private final boolean strictMethodVerification;
   private final boolean ignoreGeneratedIndex;
 
@@ -47,7 +49,7 @@ class SubscriberMethodFinder {
   private static final FindState[] FIND_STATE_POOL = new FindState[POOL_SIZE];
 
   SubscriberMethodFinder(
-      List<SubscriberInfoIndex> subscriberInfoIndexes,
+      @Nullable List<SubscriberInfoIndex> subscriberInfoIndexes,
       boolean strictMethodVerification,
       boolean ignoreGeneratedIndex) {
     this.subscriberInfoIndexes = subscriberInfoIndexes;
@@ -124,6 +126,7 @@ class SubscriberMethodFinder {
     return new FindState();
   }
 
+  @Nullable
   private SubscriberInfo getSubscriberInfo(FindState findState) {
     if (findState.subscriberInfo != null
         && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
@@ -222,11 +225,12 @@ class SubscriberMethodFinder {
     final Map<String, Class> subscriberClassByMethodKey = new HashMap<>();
     final StringBuilder methodKeyBuilder = new StringBuilder(128);
 
-    Class<?> subscriberClass;
+    @Nullable Class<?> subscriberClass;
     Class<?> clazz;
     boolean skipSuperClasses;
-    SubscriberInfo subscriberInfo;
+    @Nullable SubscriberInfo subscriberInfo;
 
+    @Initializer
     void initForSubscriber(Class<?> subscriberClass) {
       this.subscriberClass = clazz = subscriberClass;
       skipSuperClasses = false;
