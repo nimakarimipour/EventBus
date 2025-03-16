@@ -1,0 +1,31 @@
+====================
+Type='DEREFERENCE_NULLABLE', message='dereferenced expression f is @Nullable'
+/tmp/junit6426780866939280384/nullable-multi-modular/Target/src/main/java/test/Foo.java:8
+     return f.toString();
+Log:
+---NullAway.lambda$resolveRemainingErrors$17---
+==============================
+---NullAway.lambda$resolveRemainingErrors$17---
+TOP LEVEL CALL TO FIX ERROR: Type='DEREFERENCE_NULLABLE', message='dereferenced expression f is @Nullable'
+/tmp/junit6426780866939280384/nullable-multi-modular/Target/src/main/java/test/Foo.java:8
+     return f.toString();
+---NullAwayCodeFix.fix---
+Fixing error: Type='DEREFERENCE_NULLABLE', message='dereferenced expression f is @Nullable'
+/tmp/junit6426780866939280384/nullable-multi-modular/Target/src/main/java/test/Foo.java:8
+     return f.toString();
+---NullAwayCodeFix.resolveDereferenceError---
+Checking nullability possibility at error point
+---ChatGPT.checkNullabilityPossibilityAtErrorPoint---
+Asking if the error can be null at error point point
+---NullAwayCodeFix.investigateFieldNullability---
+Investigating field nullability.
+---NullAwayCodeFix.investigateFieldNullability---
+Checking if there is any method initializing field: f
+---ChatGPT.checkIfMethodIsAnInitializer---
+Asking if the method is an initializer: init()
+---NullAwayCodeFix.investigateFieldNullability---
+Found initializer method. Injecting initializer annotation.
+---NullAwayCodeFix.investigateFieldNullability---
+Found getter method. Removing nullable annotation: getF()
+---NullAwayCodeFix.resolveFieldNullabilityError---
+Field is not nullable. removed annotation from field and getter.
