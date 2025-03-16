@@ -1,0 +1,42 @@
+====================
+Type='DEREFERENCE_NULLABLE', message='dereferenced expression local is @Nullable'
+/tmp/junit9052195173709725360/nullable-multi-modular/Target/src/main/java/test/Foo.java:9
+       local.toString();
+Log:
+---NullAway.lambda$resolveRemainingErrors$17---
+==============================
+---NullAway.lambda$resolveRemainingErrors$17---
+TOP LEVEL CALL TO FIX ERROR: Type='DEREFERENCE_NULLABLE', message='dereferenced expression local is @Nullable'
+/tmp/junit9052195173709725360/nullable-multi-modular/Target/src/main/java/test/Foo.java:9
+       local.toString();
+---NullAwayCodeFix.fix---
+Fixing error: Type='DEREFERENCE_NULLABLE', message='dereferenced expression local is @Nullable'
+/tmp/junit9052195173709725360/nullable-multi-modular/Target/src/main/java/test/Foo.java:9
+       local.toString();
+---NullAwayCodeFix.resolveDereferenceError---
+Checking nullability possibility at error point
+---ChatGPT.checkNullabilityPossibilityAtErrorPoint---
+Asking if the error can be null at error point point
+---NullAwayCodeFix.investigateFieldNullability---
+Investigating field nullability.
+---NullAwayCodeFix.investigateFieldNullability---
+Checking if there is any method initializing field: f1
+---NullAwayCodeFix.getTriggeredErrorsFromLocation---
+Impact not found, re-evaluating the location.
+---NullAwayCodeFix.resolveFieldNullabilityError---
+Trying to fix errors for making the field nullable
+---NullAwayCodeFix.fixErrorByRegions---
+Fixing error by regions.
+---NullAwayCodeFix.getTriggeredErrorsFromLocation---
+Impact not found, re-evaluating the location.
+---NullAwayCodeFix.fixErrorByRegions---
+Safe regions: 3 - Unsafe regions: 1
+---ChatGPT.fixDereferenceErrorBySafeRegions---
+Attempting to fix dereference error by using safe regions
+---ChatGPT.fixDereferenceErrorBySafeRegions---
+Asking if the error can be fixed by using safe regions
+---ChatGPT.fixDereferenceErrorBySafeRegions---
+Fixing the error by using safe regions with code:
+
+---NullAwayCodeFix.fixErrorByRegions---
+Successfully generated a fix for the error.
