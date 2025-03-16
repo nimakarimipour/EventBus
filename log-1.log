@@ -1,0 +1,29 @@
+====================
+Type='DEREFERENCE_NULLABLE', message='dereferenced expression exec("A", "def") is @Nullable'
+/tmp/junit746475219359601182/nullable-multi-modular/Target/src/main/java/test/Foo.java:18
+     return exec("A", "def").toString();
+Log:
+---NullAway.lambda$resolveRemainingErrors$17---
+==============================
+---NullAway.lambda$resolveRemainingErrors$17---
+TOP LEVEL CALL TO FIX ERROR: Type='DEREFERENCE_NULLABLE', message='dereferenced expression exec("A", "def") is @Nullable'
+/tmp/junit746475219359601182/nullable-multi-modular/Target/src/main/java/test/Foo.java:18
+     return exec("A", "def").toString();
+---NullAwayCodeFix.fix---
+Fixing error: Type='DEREFERENCE_NULLABLE', message='dereferenced expression exec("A", "def") is @Nullable'
+/tmp/junit746475219359601182/nullable-multi-modular/Target/src/main/java/test/Foo.java:18
+     return exec("A", "def").toString();
+---NullAwayCodeFix.resolveDereferenceError---
+Checking nullability possibility at error point
+---ChatGPT.checkNullabilityPossibilityAtErrorPoint---
+Asking if the error can be null at error point point
+---NullAwayCodeFix.resolveMethodDereferenceError---
+Resolving method dereference error.
+---NullAwayCodeFix.resolveMethodDereferenceError---
+Method is in annotated package. Checking if the method is returning nullable.
+---NullAwayCodeFix.investigateMethodReturnNullability---
+Checking if the method is returning nullable.
+---ChatGPT.checkIfMethodIsReturningNullable---
+Asking if the method is returning nullable: exec(java.lang.String,java.lang.String)
+---NullAwayCodeFix.resolveMethodDereferenceError---
+Method is not returning nullable. Injecting suppression annotation.
