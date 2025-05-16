@@ -41,10 +41,10 @@ public class EventBusBuilder {
   boolean ignoreGeneratedIndex;
   boolean strictMethodVerification;
   ExecutorService executorService = DEFAULT_EXECUTOR_SERVICE;
-  @Nullable List<Class<?>> skipMethodVerificationForClasses;
-  @Nullable List<SubscriberInfoIndex> subscriberInfoIndexes;
-  @Nullable Logger logger;
-  @Nullable MainThreadSupport mainThreadSupport;
+   @Nullable List<Class<?>> skipMethodVerificationForClasses;
+   @Nullable List<SubscriberInfoIndex> subscriberInfoIndexes;
+   @Nullable Logger logger;
+   @Nullable MainThreadSupport mainThreadSupport;
 
   EventBusBuilder() {}
 
@@ -161,8 +161,8 @@ public class EventBusBuilder {
     }
   }
 
-  @Nullable
-  MainThreadSupport getMainThreadSupport() {
+  
+  @Nullable MainThreadSupport getMainThreadSupport() {
     if (mainThreadSupport != null) {
       return mainThreadSupport;
     } else if (AndroidLogger.isAndroidLogAvailable()) {
@@ -175,8 +175,8 @@ public class EventBusBuilder {
     }
   }
 
-  @Nullable
-  static Object getAndroidMainLooperOrNull() {
+  
+  @Nullable static Object getAndroidMainLooperOrNull() {
     try {
       return Looper.getMainLooper();
     } catch (RuntimeException e) {

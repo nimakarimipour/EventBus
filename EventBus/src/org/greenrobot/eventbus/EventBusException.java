@@ -34,7 +34,7 @@ public class EventBusException extends RuntimeException {
     super(throwable);
   }
 
-  public EventBusException(String detailMessage, @Nullable Throwable throwable) {
+  public EventBusException(String detailMessage,  @Nullable Throwable throwable) {
     super(detailMessage, throwable);
   }
 }

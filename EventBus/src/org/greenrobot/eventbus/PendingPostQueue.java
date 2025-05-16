@@ -19,8 +19,8 @@ package org.greenrobot.eventbus;
 import javax.annotation.Nullable;
 
 final class PendingPostQueue {
-  @Nullable private PendingPost head;
-  @Nullable private PendingPost tail;
+   @Nullable private PendingPost head;
+   @Nullable private PendingPost tail;
 
   synchronized void enqueue(PendingPost pendingPost) {
     if (pendingPost == null) {
@@ -37,8 +37,8 @@ final class PendingPostQueue {
     notifyAll();
   }
 
-  @Nullable
-  synchronized PendingPost poll() {
+  
+  @Nullable synchronized PendingPost poll() {
     PendingPost pendingPost = head;
     if (head != null) {
       head = head.next;
@@ -49,8 +49,8 @@ final class PendingPostQueue {
     return pendingPost;
   }
 
-  @Nullable
-  synchronized PendingPost poll(int maxMillisToWait) throws InterruptedException {
+  
+  @Nullable synchronized PendingPost poll(int maxMillisToWait) throws InterruptedException {
     if (head == null) {
       wait(maxMillisToWait);
     }

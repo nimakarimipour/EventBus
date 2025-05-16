@@ -38,8 +38,8 @@ public class ExceptionToResourceMapping {
   }
 
   /** Looks at the exception and its causes trying to find an ID. */
-  @Nullable
-  public Integer mapThrowable(final Throwable throwable) {
+  
+  @Nullable public Integer mapThrowable(final Throwable throwable) {
     Throwable throwableToCheck = throwable;
     int depthToGo = 20;
 
@@ -61,8 +61,8 @@ public class ExceptionToResourceMapping {
   }
 
   /** Mapping without checking the cause (done in mapThrowable). */
-  @Nullable
-  protected Integer mapThrowableFlat(Throwable throwable) {
+  
+  @Nullable protected Integer mapThrowableFlat(Throwable throwable) {
     Class<? extends Throwable> throwableClass = throwable.getClass();
     Integer resId = throwableToMsgIdMap.get(throwableClass);
     if (resId == null) {

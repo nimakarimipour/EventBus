@@ -42,7 +42,7 @@ public class EventBus {
   /** Log tag, apps may override it. */
   public static String TAG = "EventBus";
 
-  @Nullable static volatile EventBus defaultInstance;
+   @Nullable static volatile EventBus defaultInstance;
 
   private static final EventBusBuilder DEFAULT_BUILDER = new EventBusBuilder();
   private static final Map<Class<?>, List<Class<?>>> eventTypesCache = new HashMap<>();
@@ -59,10 +59,10 @@ public class EventBus {
         }
       };
 
-  // @Nullable
-  @Nullable private final MainThreadSupport mainThreadSupport;
-  // @Nullable
-  @Nullable private final Poster mainThreadPoster;
+  // 
+   @Nullable private final MainThreadSupport mainThreadSupport;
+  // 
+   @Nullable private final Poster mainThreadPoster;
   private final BackgroundPoster backgroundPoster;
   private final AsyncPoster asyncPoster;
   private final SubscriberMethodFinder subscriberMethodFinder;
@@ -204,7 +204,7 @@ public class EventBus {
   }
 
   private void checkPostStickyEventToSubscription(
-      Subscription newSubscription, @Nullable Object stickyEvent) {
+      Subscription newSubscription,  @Nullable Object stickyEvent) {
     if (stickyEvent != null) {
       // If the subscriber is trying to abort the event, it will fail (event is not tracked in
       // posting state)
@@ -325,8 +325,8 @@ public class EventBus {
    *
    * @see #postSticky(Object)
    */
-  @Nullable
-  public <T> T getStickyEvent(Class<T> eventType) {
+  
+  @Nullable public <T> T getStickyEvent(Class<T> eventType) {
     synchronized (stickyEvents) {
       return eventType.cast(stickyEvents.get(eventType));
     }
@@ -521,7 +521,7 @@ public class EventBus {
     }
   }
 
-  void invokeSubscriber(Subscription subscription, @Nullable Object event) {
+  void invokeSubscriber(Subscription subscription,  @Nullable Object event) {
     try {
       subscription.subscriberMethod.method.invoke(subscription.subscriber, event);
     } catch (InvocationTargetException e) {
@@ -532,7 +532,7 @@ public class EventBus {
   }
 
   private void handleSubscriberException(
-      Subscription subscription, @Nullable Object event, @Nullable Throwable cause) {
+      Subscription subscription,  @Nullable Object event,  @Nullable Throwable cause) {
     if (event instanceof SubscriberExceptionEvent) {
       if (logSubscriberExceptions) {
         // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log
@@ -577,8 +577,8 @@ public class EventBus {
     final List<Object> eventQueue = new ArrayList<>();
     boolean isPosting;
     boolean isMainThread;
-    @Nullable Subscription subscription;
-    @Nullable Object event;
+     @Nullable Subscription subscription;
+     @Nullable Object event;
     boolean canceled;
   }
 

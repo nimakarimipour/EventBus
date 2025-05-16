@@ -40,7 +40,7 @@ public class ErrorDialogFragments {
    * TODO Use config: Event class to be fired on dismissing the dialog by the user. May be
    * configured by each app.
    */
-  @Nullable public static Class<?> EVENT_TYPE_ON_CLICK;
+   @Nullable public static Class<?> EVENT_TYPE_ON_CLICK;
 
   public static Dialog createDialog(
       Context context, Bundle arguments, OnClickListener onClickListener) {

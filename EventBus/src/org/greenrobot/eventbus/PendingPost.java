@@ -22,9 +22,9 @@ import javax.annotation.Nullable;
 final class PendingPost {
   private static final List<PendingPost> pendingPostPool = new ArrayList<PendingPost>();
 
-  @Nullable Object event;
-  @Nullable Subscription subscription;
-  @Nullable PendingPost next;
+   @Nullable Object event;
+   @Nullable Subscription subscription;
+   @Nullable PendingPost next;
 
   private PendingPost(Object event, Subscription subscription) {
     this.event = event;

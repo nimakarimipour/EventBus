@@ -58,7 +58,7 @@ public class AsyncExecutor {
     }
 
     @Initializer
-    public AsyncExecutor buildForScope(@Nullable Object executionContext) {
+    public AsyncExecutor buildForScope( @Nullable Object executionContext) {
       if (eventBus == null) {
         eventBus = EventBus.getDefault();
       }
@@ -88,10 +88,10 @@ public class AsyncExecutor {
   private final Executor threadPool;
   private final Constructor<?> failureEventConstructor;
   private final EventBus eventBus;
-  @Nullable private final Object scope;
+   @Nullable private final Object scope;
 
   private AsyncExecutor(
-      Executor threadPool, EventBus eventBus, Class<?> failureEventType, @Nullable Object scope) {
+      Executor threadPool, EventBus eventBus, Class<?> failureEventType,  @Nullable Object scope) {
     this.threadPool = threadPool;
     this.eventBus = eventBus;
     this.scope = scope;

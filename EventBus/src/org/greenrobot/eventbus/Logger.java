@@ -24,7 +24,7 @@ public interface Logger {
 
   void log(Level level, String msg);
 
-  void log(Level level, String msg, @Nullable Throwable th);
+  void log(Level level, String msg,  @Nullable Throwable th);
 
   class JavaLogger implements Logger {
     protected final java.util.logging.Logger logger;
@@ -40,7 +40,7 @@ public interface Logger {
     }
 
     @Override
-    public void log(Level level, String msg, @Nullable Throwable th) {
+    public void log(Level level, String msg,  @Nullable Throwable th) {
       // TODO Replace logged method with caller method
       logger.log(level, msg, th);
     }
@@ -54,7 +54,7 @@ public interface Logger {
     }
 
     @Override
-    public void log(Level level, String msg, @Nullable Throwable th) {
+    public void log(Level level, String msg,  @Nullable Throwable th) {
       System.out.println("[" + level + "] " + msg);
       th.printStackTrace(System.out);
     }
@@ -68,8 +68,8 @@ public interface Logger {
           : new Logger.SystemOutLogger();
     }
 
-    @Nullable
-    static Object getAndroidMainLooperOrNull() {
+    
+    @Nullable static Object getAndroidMainLooperOrNull() {
       try {
         return Looper.getMainLooper();
       } catch (RuntimeException e) {
