@@ -24,12 +24,12 @@ import org.greenrobot.eventbus.ThreadMode;
 /** Base class for generated subscriber meta info classes created by annotation processing. */
 public abstract class AbstractSubscriberInfo implements SubscriberInfo {
   private final Class subscriberClass;
-   @Nullable private final Class<? extends SubscriberInfo> superSubscriberInfoClass;
+  @Nullable private final Class<? extends SubscriberInfo> superSubscriberInfoClass;
   private final boolean shouldCheckSuperclass;
 
   protected AbstractSubscriberInfo(
       Class subscriberClass,
-       @Nullable Class<? extends SubscriberInfo> superSubscriberInfoClass,
+      @Nullable Class<? extends SubscriberInfo> superSubscriberInfoClass,
       boolean shouldCheckSuperclass) {
     this.subscriberClass = subscriberClass;
     this.superSubscriberInfoClass = superSubscriberInfoClass;
@@ -41,8 +41,8 @@ public abstract class AbstractSubscriberInfo implements SubscriberInfo {
     return subscriberClass;
   }
 
-  
-  @Nullable @Override
+  @Nullable
+  @Override
   public SubscriberInfo getSuperSubscriberInfo() {
     if (superSubscriberInfoClass == null) {
       return null;

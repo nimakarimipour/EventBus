@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 public class ThrowableFailureEvent implements HasExecutionScope {
   protected final Throwable throwable;
   protected final boolean suppressErrorUi;
-   @Nullable private Object executionContext;
+  @Nullable private Object executionContext;
 
   public ThrowableFailureEvent(Throwable throwable) {
     this.throwable = throwable;
@@ -48,12 +48,12 @@ public class ThrowableFailureEvent implements HasExecutionScope {
     return suppressErrorUi;
   }
 
-  
-  @Nullable public Object getExecutionScope() {
+  @Nullable
+  public Object getExecutionScope() {
     return executionContext;
   }
 
-  public void setExecutionScope( @Nullable Object executionContext) {
+  public void setExecutionScope(@Nullable Object executionContext) {
     this.executionContext = executionContext;
   }
 }

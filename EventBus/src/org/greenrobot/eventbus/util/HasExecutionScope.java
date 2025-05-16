@@ -19,8 +19,9 @@ package org.greenrobot.eventbus.util;
 import javax.annotation.Nullable;
 
 public interface HasExecutionScope {
-  
-  @Nullable Object getExecutionScope();
 
-  void setExecutionScope( @Nullable Object executionScope);
+  @Nullable
+  Object getExecutionScope();
+
+  void setExecutionScope(@Nullable Object executionScope);
 }

@@ -28,18 +28,18 @@ public final class SubscriberExceptionEvent {
   public final EventBus eventBus;
 
   /** The Throwable thrown by a subscriber. */
-   @Nullable public final Throwable throwable;
+  @Nullable public final Throwable throwable;
 
   /** The original event that could not be delivered to any subscriber. */
-   @Nullable public final Object causingEvent;
+  @Nullable public final Object causingEvent;
 
   /** The subscriber that threw the Throwable. */
   public final Object causingSubscriber;
 
   public SubscriberExceptionEvent(
       EventBus eventBus,
-       @Nullable Throwable throwable,
-       @Nullable Object causingEvent,
+      @Nullable Throwable throwable,
+      @Nullable Object causingEvent,
       Object causingSubscriber) {
     this.eventBus = eventBus;
     this.throwable = throwable;

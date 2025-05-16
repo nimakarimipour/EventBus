@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.greenrobot.eventbus.meta;
-import javax.annotation.Nullable;
 
 /** Interface for generated indexes. */
 public interface SubscriberInfoIndex {

@@ -24,8 +24,8 @@ public interface SubscriberInfo {
 
   SubscriberMethod[] getSubscriberMethods();
 
-  
-  @Nullable SubscriberInfo getSuperSubscriberInfo();
+  @Nullable
+  SubscriberInfo getSuperSubscriberInfo();
 
   boolean shouldCheckSuperclass();
 }

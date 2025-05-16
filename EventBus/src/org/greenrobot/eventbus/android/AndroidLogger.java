@@ -50,7 +50,7 @@ public class AndroidLogger implements Logger {
     }
   }
 
-  public void log(Level level, String msg,  @Nullable Throwable th) {
+  public void log(Level level, String msg, @Nullable Throwable th) {
     if (level != Level.OFF) {
       // That's how Log does it internally
       Log.println(mapLevel(level), tag, msg + "\n" + Log.getStackTraceString(th));

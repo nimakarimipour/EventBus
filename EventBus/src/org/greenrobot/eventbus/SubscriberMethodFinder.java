@@ -41,7 +41,7 @@ class SubscriberMethodFinder {
   private static final Map<Class<?>, List<SubscriberMethod>> METHOD_CACHE =
       new ConcurrentHashMap<>();
 
-   @Nullable private List<SubscriberInfoIndex> subscriberInfoIndexes;
+  @Nullable private List<SubscriberInfoIndex> subscriberInfoIndexes;
   private final boolean strictMethodVerification;
   private final boolean ignoreGeneratedIndex;
 
@@ -49,7 +49,7 @@ class SubscriberMethodFinder {
   private static final FindState[] FIND_STATE_POOL = new FindState[POOL_SIZE];
 
   SubscriberMethodFinder(
-       @Nullable List<SubscriberInfoIndex> subscriberInfoIndexes,
+      @Nullable List<SubscriberInfoIndex> subscriberInfoIndexes,
       boolean strictMethodVerification,
       boolean ignoreGeneratedIndex) {
     this.subscriberInfoIndexes = subscriberInfoIndexes;
@@ -126,8 +126,8 @@ class SubscriberMethodFinder {
     return new FindState();
   }
 
-  
-  @Nullable private SubscriberInfo getSubscriberInfo(FindState findState) {
+  @Nullable
+  private SubscriberInfo getSubscriberInfo(FindState findState) {
     if (findState.subscriberInfo != null
         && findState.subscriberInfo.getSuperSubscriberInfo() != null) {
       SubscriberInfo superclassInfo = findState.subscriberInfo.getSuperSubscriberInfo();
@@ -225,10 +225,10 @@ class SubscriberMethodFinder {
     final Map<String, Class> subscriberClassByMethodKey = new HashMap<>();
     final StringBuilder methodKeyBuilder = new StringBuilder(128);
 
-     @Nullable Class<?> subscriberClass;
+    @Nullable Class<?> subscriberClass;
     Class<?> clazz;
     boolean skipSuperClasses;
-     @Nullable SubscriberInfo subscriberInfo;
+    @Nullable SubscriberInfo subscriberInfo;
 
     @Initializer
     void initForSubscriber(Class<?> subscriberClass) {
