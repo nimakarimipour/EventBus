@@ -287,18 +287,16 @@ class SubscriberMethodFinder {
     }
 
     void moveToSuperclass() {
-      if (skipSuperClasses) {
-        clazz = null;
-      } else {
+      if (!skipSuperClasses) {
         clazz = clazz.getSuperclass();
-        String clazzName = clazz.getName();
-        // Skip system classes, this degrades performance.
-        // Also we might avoid some ClassNotFoundException (see FAQ for background).
-        if (clazzName.startsWith("java.")
-            || clazzName.startsWith("javax.")
-            || clazzName.startsWith("android.")
-            || clazzName.startsWith("androidx.")) {
-          clazz = null;
+        if (clazz != null) {
+          String clazzName = clazz.getName();
+          if (clazzName.startsWith("java.")
+              || clazzName.startsWith("javax.")
+              || clazzName.startsWith("android.")
+              || clazzName.startsWith("androidx.")) {
+            clazz = null;
+          }
         }
       }
     }
