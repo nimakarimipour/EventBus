@@ -54,11 +54,9 @@ public interface Logger {
     }
 
     @Override
-    public void log(Level level, String msg, Throwable th) {
+    public void log(Level level, String msg, @Nullable Throwable th) {
       System.out.println("[" + level + "] " + msg);
-      if (th != null) {
-        th.printStackTrace(System.out);
-      }
+      th.printStackTrace(System.out);
     }
   }
 
