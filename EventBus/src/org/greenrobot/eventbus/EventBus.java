@@ -531,11 +531,20 @@ public class EventBus {
     }
   }
 
-  private void handleSubscriberException(
-      Subscription subscription, @Nullable Object event, @Nullable Throwable cause) {
+  private void handleSubscriberException(Subscription subscription, Object event, Throwable cause) {
+    if (event == null) {
+      if (logSubscriberExceptions) {
+        logger.log(
+            Level.SEVERE,
+            "Event was null while handling subscriber exception for subscriber "
+                + subscription.subscriber.getClass(),
+            cause);
+      }
+      return;
+    }
+
     if (event instanceof SubscriberExceptionEvent) {
       if (logSubscriberExceptions) {
-        // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log
         logger.log(
             Level.SEVERE,
             "SubscriberExceptionEvent subscriber "
