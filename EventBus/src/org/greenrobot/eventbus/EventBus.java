@@ -300,7 +300,8 @@ public class EventBus {
       throw new EventBusException("Event may not be null");
     } else if (postingState.event != event) {
       throw new EventBusException("Only the currently handled event may be aborted");
-    } else if (postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+    } else if (postingState.subscription != null
+        && postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
       throw new EventBusException(" event handlers may only abort the incoming event");
     }
 
