@@ -56,10 +56,6 @@ public class ErrorDialogFragments {
 
   public static void handleOnClick(
       DialogInterface dialog, int which, Activity activity, Bundle arguments) {
-    if (ErrorDialogManager.factory == null) {
-      throw new RuntimeException("The ErrorDialogManager.factory must be initialized before use.");
-    }
-
     if (EVENT_TYPE_ON_CLICK != null) {
       Object event;
       try {

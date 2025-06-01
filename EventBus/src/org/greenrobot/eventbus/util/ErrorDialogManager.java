@@ -57,10 +57,6 @@ public class ErrorDialogManager {
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      if (ErrorDialogManager.factory == null) {
-        throw new RuntimeException(
-            "ErrorDialogManager.factory cannot be null. Please ensure it is initialized.");
-      }
       eventBus = ErrorDialogManager.factory.config.getEventBus();
       eventBus.register(this);
       skipRegisterOnNextResume = true;
@@ -73,10 +69,6 @@ public class ErrorDialogManager {
         // registered in onCreate, skip registration in this run
         skipRegisterOnNextResume = false;
       } else {
-        if (ErrorDialogManager.factory == null) {
-          throw new RuntimeException(
-              "You must set the static factory field to configure error dialogs for your app.");
-        }
         eventBus = ErrorDialogManager.factory.config.getEventBus();
         eventBus.register(this);
       }
@@ -101,11 +93,6 @@ public class ErrorDialogManager {
       if (existingFragment != null) {
         // Just show the latest error
         existingFragment.dismiss();
-      }
-
-      if (factory == null) {
-        throw new RuntimeException(
-            "You must set the factory to configure error dialogs for your app.");
       }
 
       android.support.v4.app.DialogFragment errorFragment =
@@ -145,10 +132,6 @@ public class ErrorDialogManager {
     @Override
     public void onResume() {
       super.onResume();
-      if (ErrorDialogManager.factory == null) {
-        throw new RuntimeException(
-            "You must set the static factory field to configure error dialogs for your app.");
-      }
       eventBus = ErrorDialogManager.factory.config.getEventBus();
       eventBus.register(this);
     }
@@ -174,11 +157,6 @@ public class ErrorDialogManager {
       if (existingFragment != null) {
         // Just show the latest error
         existingFragment.dismiss();
-      }
-
-      if (factory == null) {
-        throw new RuntimeException(
-            "You must set the static factory field to configure error dialogs for your app.");
       }
 
       android.app.DialogFragment errorFragment =
@@ -209,7 +187,7 @@ public class ErrorDialogManager {
   }
 
   /** Must be set by the application. */
-  @Nullable public static ErrorDialogFragmentFactory<?> factory;
+  public static ErrorDialogFragmentFactory<?> factory;
 
   protected static final String TAG_ERROR_DIALOG = "de.greenrobot.eventbus.error_dialog";
   protected static final String TAG_ERROR_DIALOG_MANAGER =
@@ -286,10 +264,6 @@ public class ErrorDialogManager {
   }
 
   protected static void checkLogException(ThrowableFailureEvent event) {
-    if (factory == null) {
-      throw new RuntimeException(
-          "You must set the static factory field to configure error dialogs for your app.");
-    }
     if (factory.config.logExceptions) {
       String tag = factory.config.tagForLoggingExceptions;
       if (tag == null) {
