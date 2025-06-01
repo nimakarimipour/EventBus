@@ -447,7 +447,7 @@ public class EventBus {
       case MAIN:
         if (isMainThread) {
           invokeSubscriber(subscription, event);
-        } else {
+        } else if (mainThreadPoster != null) { // Check for null before use
           mainThreadPoster.enqueue(subscription, event);
         }
         break;
