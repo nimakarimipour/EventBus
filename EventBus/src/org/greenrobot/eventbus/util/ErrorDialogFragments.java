@@ -26,6 +26,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import edu.ucr.cs.riple.annotator.util.Nullability;
 import javax.annotation.Nullable;
 import org.greenrobot.eventbus.EventBus;
 
@@ -56,6 +57,10 @@ public class ErrorDialogFragments {
 
   public static void handleOnClick(
       DialogInterface dialog, int which, Activity activity, Bundle arguments) {
+    if (ErrorDialogManager.factory == null) {
+      throw new RuntimeException("The ErrorDialogManager.factory must be initialized before use.");
+    }
+
     if (EVENT_TYPE_ON_CLICK != null) {
       Object event;
       try {
@@ -63,7 +68,10 @@ public class ErrorDialogFragments {
       } catch (Exception e) {
         throw new RuntimeException("Event cannot be constructed", e);
       }
-      EventBus eventBus = ErrorDialogManager.factory.config.getEventBus();
+      EventBus eventBus =
+          Nullability.castToNonnull(ErrorDialogManager.factory, "explicit null check")
+              .config
+              .getEventBus();
       eventBus.post(event);
     }
     boolean finish = arguments.getBoolean(ErrorDialogManager.KEY_FINISH_AFTER_DIALOG, false);
