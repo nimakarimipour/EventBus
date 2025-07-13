@@ -26,6 +26,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 import javax.annotation.Nullable;
+import edu.ucr.cs.riple.annotator.util.Nullability;
 
 /**
  * EventBus is a central publish/subscribe event system for Java and Android. Events are posted
@@ -532,44 +533,43 @@ public class EventBus {
   }
 
   private void handleSubscriberException(
-      Subscription subscription, @Nullable Object event, @Nullable Throwable cause) {
-    if (event instanceof SubscriberExceptionEvent) {
-      if (logSubscriberExceptions) {
-        // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log
-        logger.log(
-            Level.SEVERE,
-            "SubscriberExceptionEvent subscriber "
-                + subscription.subscriber.getClass()
-                + " threw an exception",
-            cause);
-        SubscriberExceptionEvent exEvent = (SubscriberExceptionEvent) event;
-        logger.log(
-            Level.SEVERE,
-            "Initial event "
-                + exEvent.causingEvent
-                + " caused exception in "
-                + exEvent.causingSubscriber,
-            exEvent.throwable);
+        Subscription subscription,  @Nullable Object event,  @Nullable Throwable cause) {
+      if (event instanceof SubscriberExceptionEvent) {
+        if (logSubscriberExceptions) {
+          logger.log(
+              Level.SEVERE,
+              "SubscriberExceptionEvent subscriber "
+                  + subscription.subscriber.getClass()
+                  + " threw an exception",
+              cause);
+          SubscriberExceptionEvent exEvent = (SubscriberExceptionEvent) event;
+          logger.log(
+              Level.SEVERE,
+              "Initial event "
+                  + exEvent.causingEvent
+                  + " caused exception in "
+                  + exEvent.causingSubscriber,
+              exEvent.throwable);
+        }
+      } else {
+        if (throwSubscriberException) {
+          throw new EventBusException("Invoking subscriber failed", cause);
+        }
+        if (logSubscriberExceptions) {
+          logger.log(
+              Level.SEVERE,
+              "Could not dispatch event: "
+                  + Nullability.castToNonnull(event).getClass()
+                  + " to subscribing class "
+                  + subscription.subscriber.getClass(),
+              cause);
+        }
+        if (sendSubscriberExceptionEvent) {
+          SubscriberExceptionEvent exEvent =
+              new SubscriberExceptionEvent(this, cause, event, subscription.subscriber);
+          post(exEvent);
+        }
       }
-    } else {
-      if (throwSubscriberException) {
-        throw new EventBusException("Invoking subscriber failed", cause);
-      }
-      if (logSubscriberExceptions) {
-        logger.log(
-            Level.SEVERE,
-            "Could not dispatch event: "
-                + event.getClass()
-                + " to subscribing class "
-                + subscription.subscriber.getClass(),
-            cause);
-      }
-      if (sendSubscriberExceptionEvent) {
-        SubscriberExceptionEvent exEvent =
-            new SubscriberExceptionEvent(this, cause, event, subscription.subscriber);
-        post(exEvent);
-      }
-    }
   }
 
   /** For ThreadLocal, much faster to set (and get multiple values). */
