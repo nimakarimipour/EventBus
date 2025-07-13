@@ -441,40 +441,40 @@ public class EventBus {
   }
 
   private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
-    switch (subscription.subscriberMethod.threadMode) {
-      case POSTING:
-        invokeSubscriber(subscription, event);
-        break;
-      case MAIN:
-        if (isMainThread) {
-          invokeSubscriber(subscription, event);
-        } else {
-          mainThreadPoster.enqueue(subscription, event);
+        switch (subscription.subscriberMethod.threadMode) {
+          case POSTING:
+            invokeSubscriber(subscription, event);
+            break;
+          case MAIN:
+            if (isMainThread) {
+              invokeSubscriber(subscription, event);
+            } else if (mainThreadPoster != null) { // Check for null before use
+              mainThreadPoster.enqueue(subscription, event);
+            }
+            break;
+          case MAIN_ORDERED:
+            if (mainThreadPoster != null) {
+              mainThreadPoster.enqueue(subscription, event);
+            } else {
+              // temporary: technically not correct as poster not decoupled from subscriber
+              invokeSubscriber(subscription, event);
+            }
+            break;
+          case BACKGROUND:
+            if (isMainThread) {
+              backgroundPoster.enqueue(subscription, event);
+            } else {
+              invokeSubscriber(subscription, event);
+            }
+            break;
+          case ASYNC:
+            asyncPoster.enqueue(subscription, event);
+            break;
+          default:
+            throw new IllegalStateException(
+                "Unknown thread mode: " + subscription.subscriberMethod.threadMode);
         }
-        break;
-      case MAIN_ORDERED:
-        if (mainThreadPoster != null) {
-          mainThreadPoster.enqueue(subscription, event);
-        } else {
-          // temporary: technically not correct as poster not decoupled from subscriber
-          invokeSubscriber(subscription, event);
-        }
-        break;
-      case BACKGROUND:
-        if (isMainThread) {
-          backgroundPoster.enqueue(subscription, event);
-        } else {
-          invokeSubscriber(subscription, event);
-        }
-        break;
-      case ASYNC:
-        asyncPoster.enqueue(subscription, event);
-        break;
-      default:
-        throw new IllegalStateException(
-            "Unknown thread mode: " + subscription.subscriberMethod.threadMode);
     }
-  }
 
   /**
    * Looks up all Class objects including super classes and interfaces. Should also work for
