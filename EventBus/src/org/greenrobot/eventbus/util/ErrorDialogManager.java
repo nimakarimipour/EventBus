@@ -137,10 +137,12 @@ public class ErrorDialogManager {
     }
 
     @Override
-    public void onPause() {
-      eventBus.unregister(this);
-      super.onPause();
-    }
+      public void onPause() {
+        if (eventBus != null) {
+          eventBus.unregister(this);
+        }
+        super.onPause();
+      }
 
     public void onEventMainThread(ThrowableFailureEvent event) {
       if (!isInExecutionScope(executionScope, event)) {
