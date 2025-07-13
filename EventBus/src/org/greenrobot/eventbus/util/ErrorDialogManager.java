@@ -187,7 +187,14 @@ public class ErrorDialogManager {
   }
 
   /** Must be set by the application. */
-  public static ErrorDialogFragmentFactory<?> factory;
+  public static ErrorDialogFragmentFactory<?> factory =
+      new ErrorDialogFragmentFactory<>() {
+        @Override
+        public Fragment createErrorFragment(Throwable th, boolean b, Bundle bundle) {
+          // Implement default factory logic here or leave it for the application to override
+          return new Fragment();
+        }
+      };
 
   protected static final String TAG_ERROR_DIALOG = "de.greenrobot.eventbus.error_dialog";
   protected static final String TAG_ERROR_DIALOG_MANAGER =
