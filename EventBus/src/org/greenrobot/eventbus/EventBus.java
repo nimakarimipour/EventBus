@@ -15,6 +15,7 @@
  */
 package org.greenrobot.eventbus;
 
+import edu.ucr.cs.riple.annotator.util.Nullability;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -535,7 +536,6 @@ public class EventBus {
       Subscription subscription, @Nullable Object event, @Nullable Throwable cause) {
     if (event instanceof SubscriberExceptionEvent) {
       if (logSubscriberExceptions) {
-        // Don't send another SubscriberExceptionEvent to avoid infinite event recursion, just log
         logger.log(
             Level.SEVERE,
             "SubscriberExceptionEvent subscriber "
@@ -559,7 +559,7 @@ public class EventBus {
         logger.log(
             Level.SEVERE,
             "Could not dispatch event: "
-                + event.getClass()
+                + Nullability.castToNonnull(event).getClass()
                 + " to subscribing class "
                 + subscription.subscriber.getClass(),
             cause);
