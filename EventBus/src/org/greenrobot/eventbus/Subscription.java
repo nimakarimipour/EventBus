@@ -44,7 +44,7 @@ final class Subscription {
   }
 
   @Override
-  public int hashCode() {
-    return subscriber.hashCode() + subscriberMethod.methodString.hashCode();
-  }
+    public int hashCode() {
+      return subscriber.hashCode() + (subscriberMethod.methodString == null ? 1 : subscriberMethod.methodString.hashCode());
+    }
 }

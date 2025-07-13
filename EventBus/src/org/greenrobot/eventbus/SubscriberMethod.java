@@ -16,6 +16,8 @@
 package org.greenrobot.eventbus;
 
 import java.lang.reflect.Method;
+import javax.annotation.Nullable;
+import java.util.Objects;
 
 /** Used internally by EventBus and generated subscriber indexes. */
 public class SubscriberMethod {
@@ -26,7 +28,7 @@ public class SubscriberMethod {
   final boolean sticky;
 
   /** Used for efficient comparison */
-  String methodString;
+  @Nullable String methodString;
 
   public SubscriberMethod(
       Method method, Class<?> eventType, ThreadMode threadMode, int priority, boolean sticky) {
@@ -38,20 +40,18 @@ public class SubscriberMethod {
   }
 
   @Override
-  public boolean equals(Object other) {
-    if (other == this) {
-      return true;
-    } else if (other instanceof SubscriberMethod) {
-      checkMethodString();
-      SubscriberMethod otherSubscriberMethod = (SubscriberMethod) other;
-      otherSubscriberMethod.checkMethodString();
-      // Don't use method.equals because of
-      // http://code.google.com/p/android/issues/detail?id=7811#c6
-      return methodString.equals(otherSubscriberMethod.methodString);
-    } else {
-      return false;
+    public boolean equals(Object other) {
+      if (other == this) {
+        return true;
+      } else if (other instanceof SubscriberMethod) {
+        checkMethodString();
+        SubscriberMethod otherSubscriberMethod = (SubscriberMethod) other;
+        otherSubscriberMethod.checkMethodString();
+        return Objects.equals(methodString, otherSubscriberMethod.methodString);
+      } else {
+        return false;
+      }
     }
-  }
 
   private synchronized void checkMethodString() {
     if (methodString == null) {
