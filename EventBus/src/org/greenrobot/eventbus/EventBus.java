@@ -514,13 +514,13 @@ public class EventBus {
    * thread delivery and registrations bound to the live cycle of an Activity or Fragment.
    */
   void invokeSubscriber(PendingPost pendingPost) {
-    Object event = pendingPost.event;
-    Subscription subscription = pendingPost.subscription;
-    PendingPost.releasePendingPost(pendingPost);
-    if (subscription.active) {
-      invokeSubscriber(subscription, event);
+        Object event = pendingPost.event;
+        Subscription subscription = pendingPost.subscription;
+        PendingPost.releasePendingPost(pendingPost);
+        if (subscription != null && subscription.active) {
+            invokeSubscriber(subscription, event);
+        }
     }
-  }
 
   void invokeSubscriber(Subscription subscription, @Nullable Object event) {
     try {
