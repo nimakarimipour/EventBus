@@ -16,7 +16,6 @@
 package org.greenrobot.eventbus;
 
 import com.uber.nullaway.annotations.Initializer;
-import edu.ucr.cs.riple.annotator.util.Nullability;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -160,14 +159,16 @@ class SubscriberMethodFinder {
   private void findUsingReflectionInSingleClass(FindState findState) {
     Method[] methods;
     try {
+      // This is faster than getMethods, especially when subscribers are fat classes like Activities
       methods = findState.clazz.getDeclaredMethods();
     } catch (Throwable th) {
+      // Workaround for java.lang.NoClassDefFoundError, see
+      // https://github.com/greenrobot/EventBus/issues/149
       try {
         methods = findState.clazz.getMethods();
-      } catch (LinkageError error) {
-        String msg =
-            "Could not inspect methods of "
-                + Nullability.castToNonnull(findState.clazz, "invoked before catch").getName();
+      } catch (
+          LinkageError error) { // super class of NoClassDefFoundError to be a bit more broad...
+        String msg = "Could not inspect methods of " + findState.clazz.getName();
         if (ignoreGeneratedIndex) {
           msg += ". Please consider using EventBus annotation processor to avoid reflection.";
         } else {
