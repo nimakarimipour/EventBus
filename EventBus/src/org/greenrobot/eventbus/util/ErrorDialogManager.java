@@ -26,7 +26,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import edu.ucr.cs.riple.annotator.util.Nullability;
 import javax.annotation.Nullable;
 import org.greenrobot.eventbus.EventBus;
 
@@ -58,14 +57,7 @@ public class ErrorDialogManager {
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      if (ErrorDialogManager.factory == null) {
-        throw new RuntimeException(
-            "ErrorDialogManager.factory cannot be null. Please ensure it is initialized.");
-      }
-      eventBus =
-          Nullability.castToNonnull(ErrorDialogManager.factory, "explicit null check")
-              .config
-              .getEventBus();
+      eventBus = ErrorDialogManager.factory.config.getEventBus();
       eventBus.register(this);
       skipRegisterOnNextResume = true;
     }
@@ -77,10 +69,6 @@ public class ErrorDialogManager {
         // registered in onCreate, skip registration in this run
         skipRegisterOnNextResume = false;
       } else {
-        if (ErrorDialogManager.factory == null) {
-          throw new RuntimeException(
-              "You must set the static factory field to configure error dialogs for your app.");
-        }
         eventBus = ErrorDialogManager.factory.config.getEventBus();
         eventBus.register(this);
       }
@@ -97,23 +85,19 @@ public class ErrorDialogManager {
         return;
       }
       checkLogException(event);
+      // Execute pending commits before finding to avoid multiple error fragments being shown
       FragmentManager fm = getFragmentManager();
       fm.executePendingTransactions();
 
       DialogFragment existingFragment = (DialogFragment) fm.findFragmentByTag(TAG_ERROR_DIALOG);
       if (existingFragment != null) {
+        // Just show the latest error
         existingFragment.dismiss();
-      }
-
-      if (factory == null) {
-        throw new RuntimeException(
-            "You must set the factory to configure error dialogs for your app.");
       }
 
       android.support.v4.app.DialogFragment errorFragment =
           (android.support.v4.app.DialogFragment)
-              Nullability.castToNonnull(factory, "factory is checked")
-                  .prepareErrorFragment(event, finishAfterDialog, argumentsForErrorDialog);
+              factory.prepareErrorFragment(event, finishAfterDialog, argumentsForErrorDialog);
       if (errorFragment != null) {
         errorFragment.show(fm, TAG_ERROR_DIALOG);
       }
@@ -148,11 +132,7 @@ public class ErrorDialogManager {
     @Override
     public void onResume() {
       super.onResume();
-      if (ErrorDialogManager.factory == null) {
-        throw new RuntimeException(
-            "You must set the static factory field to configure error dialogs for your app.");
-      }
-      eventBus = Nullability.castToNonnull(ErrorDialogManager.factory, "checked for non-null");
+      eventBus = ErrorDialogManager.factory.config.getEventBus();
       eventBus.register(this);
     }
 
@@ -168,24 +148,20 @@ public class ErrorDialogManager {
       }
       checkLogException(event);
 
+      // Execute pending commits before finding to avoid multiple error fragments being shown
       android.app.FragmentManager fm = getFragmentManager();
       fm.executePendingTransactions();
 
       android.app.DialogFragment existingFragment =
           (android.app.DialogFragment) fm.findFragmentByTag(TAG_ERROR_DIALOG);
       if (existingFragment != null) {
+        // Just show the latest error
         existingFragment.dismiss();
-      }
-
-      if (factory == null) {
-        throw new RuntimeException(
-            "You must set the static factory field to configure error dialogs for your app.");
       }
 
       android.app.DialogFragment errorFragment =
           (android.app.DialogFragment)
-              Nullability.castToNonnull(factory, "checked for null")
-                  .prepareErrorFragment(event, finishAfterDialog, argumentsForErrorDialog);
+              factory.prepareErrorFragment(event, finishAfterDialog, argumentsForErrorDialog);
       if (errorFragment != null) {
         errorFragment.show(fm, TAG_ERROR_DIALOG);
       }
@@ -211,7 +187,7 @@ public class ErrorDialogManager {
   }
 
   /** Must be set by the application. */
-  @Nullable public static ErrorDialogFragmentFactory<?> factory;
+  public static ErrorDialogFragmentFactory<?> factory;
 
   protected static final String TAG_ERROR_DIALOG = "de.greenrobot.eventbus.error_dialog";
   protected static final String TAG_ERROR_DIALOG_MANAGER =
@@ -288,11 +264,7 @@ public class ErrorDialogManager {
   }
 
   protected static void checkLogException(ThrowableFailureEvent event) {
-    if (factory == null) {
-      throw new RuntimeException(
-          "You must set the static factory field to configure error dialogs for your app.");
-    }
-    if (Nullability.castToNonnull(factory, "checked to be nonnull").config.logExceptions) {
+    if (factory.config.logExceptions) {
       String tag = factory.config.tagForLoggingExceptions;
       if (tag == null) {
         tag = EventBus.TAG;
