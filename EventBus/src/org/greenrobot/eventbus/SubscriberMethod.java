@@ -35,6 +35,11 @@ public class SubscriberMethod {
     this.eventType = eventType;
     this.priority = priority;
     this.sticky = sticky;
+    this.methodString = generateMethodString();
+  }
+
+  private String generateMethodString() {
+    return method.getDeclaringClass().getName() + "#" + method.getName();
   }
 
   @Override
