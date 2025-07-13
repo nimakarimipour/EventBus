@@ -238,15 +238,14 @@ class SubscriberMethodFinder {
     }
 
     void recycle() {
-      subscriberMethods.clear();
-      anyMethodByEventType.clear();
-      subscriberClassByMethodKey.clear();
-      methodKeyBuilder.setLength(0);
-      subscriberClass = null;
-      clazz = null;
-      skipSuperClasses = false;
-      subscriberInfo = null;
-    }
+          subscriberMethods.clear();
+          anyMethodByEventType.clear();
+          subscriberClassByMethodKey.clear();
+          methodKeyBuilder.setLength(0);
+          subscriberClass = null;
+          skipSuperClasses = false;
+          subscriberInfo = null;
+      }
 
     boolean checkAdd(Method method, Class<?> eventType) {
       // 2 level check: 1st level with event type only (fast), 2nd level with complete signature
