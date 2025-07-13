@@ -292,20 +292,21 @@ public class EventBus {
    * methods running in posting thread {@link ThreadMode#POSTING}.
    */
   public void cancelEventDelivery(Object event) {
-    PostingThreadState postingState = currentPostingThreadState.get();
-    if (!postingState.isPosting) {
-      throw new EventBusException(
-          "This method may only be called from inside event handling methods on the posting thread");
-    } else if (event == null) {
-      throw new EventBusException("Event may not be null");
-    } else if (postingState.event != event) {
-      throw new EventBusException("Only the currently handled event may be aborted");
-    } else if (postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
-      throw new EventBusException(" event handlers may only abort the incoming event");
+      PostingThreadState postingState = currentPostingThreadState.get();
+      if (!postingState.isPosting) {
+        throw new EventBusException(
+            "This method may only be called from inside event handling methods on the posting thread");
+      } else if (event == null) {
+        throw new EventBusException("Event may not be null");
+      } else if (postingState.event != event) {
+        throw new EventBusException("Only the currently handled event may be aborted");
+      } else if (postingState.subscription != null 
+                 && postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+        throw new EventBusException(" event handlers may only abort the incoming event");
+      }
+  
+      postingState.canceled = true;
     }
-
-    postingState.canceled = true;
-  }
 
   /**
    * Posts the given event to the event bus and holds on to the event (because it is sticky). The
