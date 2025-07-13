@@ -138,7 +138,9 @@ public class ErrorDialogManager {
 
     @Override
     public void onPause() {
-      eventBus.unregister(this);
+      if (eventBus != null) {
+        eventBus.unregister(this);
+      }
       super.onPause();
     }
 
