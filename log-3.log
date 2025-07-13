@@ -1,0 +1,160 @@
+====================
+Type='DEREFERENCE_NULLABLE', message='dereferenced expression postingState.subscription is @Nullable'
+/home/nima/Developer/nullness-benchmarks/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:303
+    } else if (postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+Log:
+15:13:20.774 TRACE edu.ucr.cs.riple.core.checkers.nullaway.NullAway.lambda$resolveRemainingErrors$19
+==============================
+15:13:20.774 TRACE edu.ucr.cs.riple.core.checkers.nullaway.NullAway.lambda$resolveRemainingErrors$19
+CHATGPT.COUNT = 1
+15:13:20.774 TRACE edu.ucr.cs.riple.core.checkers.nullaway.NullAway.lambda$resolveRemainingErrors$19
+CHATGPT.PROMPTS SIZE = 1
+15:13:20.774 TRACE edu.ucr.cs.riple.core.checkers.nullaway.NullAway.lambda$resolveRemainingErrors$19
+Both set to 0 and cleared 0
+15:13:20.774 TRACE edu.ucr.cs.riple.core.checkers.nullaway.NullAway.lambda$resolveRemainingErrors$19
+3 : TOP LEVEL CALL TO FIX ERROR: Type='DEREFERENCE_NULLABLE', message='dereferenced expression postingState.subscription is @Nullable'
+/home/nima/Developer/nullness-benchmarks/EventBus/EventBus/src/org/greenrobot/eventbus/EventBus.java:303
+    } else if (postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+15:13:22.283 TRACE edu.ucr.cs.riple.core.checkers.nullaway.codefix.ChatGPT.ask
+Asking ChatGPT:
+I want to resolve a warning reported by NullAway.
+The error is of the type of "DEREFERENCE_NULLABLE" and the full error message is: "dereferenced expression postingState.subscription is @Nullable".
+The line with the error is: "    } else if (postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {".
+
+The error is within "the method: cancelEventDelivery(java.lang.Object)" and the code surrounding the error is:
+```java
+        postingState.isMainThread = false;
+      }
+    }
+  }
+
+  /**
+   * Called from a subscriber's event handling method, further event delivery will be canceled.
+   * Subsequent subscribers won't receive the event. Events are usually canceled by higher priority
+   * subscribers (see {@link Subscribe#priority()}). Canceling is restricted to event handling
+   * methods running in posting thread {@link ThreadMode#POSTING}.
+   */
+  public void cancelEventDelivery(Object event) {
+    PostingThreadState postingState = currentPostingThreadState.get();
+    if (!postingState.isPosting) {
+      throw new EventBusException(
+          "This method may only be called from inside event handling methods on the posting thread");
+    } else if (event == null) {
+      throw new EventBusException("Event may not be null");
+    } else if (postingState.event != event) {
+      throw new EventBusException("Only the currently handled event may be aborted");
+    } else if (postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+      throw new EventBusException(" event handlers may only abort the incoming event");
+    }
+
+    postingState.canceled = true;
+  }
+
+  /**
+   * Posts the given event to the event bus and holds on to the event (because it is sticky). The
+   * most recent sticky event of an event's type is kept in memory for future access by subscribers
+   * using {@link Subscribe#sticky()}.
+   */
+  public void postSticky(Object event) {
+    synchronized (stickyEvents) {
+      stickyEvents.put(event.getClass(), event);
+    }
+    // Should be posted after it is putted, in case the subscriber wants to remove immediately
+    post(event);
+  }
+
+```
+
+Give me the fixed code snippet (ONLY THE METHOD REWRITE OF "cancelEventDelivery(java.lang.Object)") in XML format in <response> tag like the example below. I will apply the fix to my codebase.
+Do not import any additional libraries or classes or java comments.
+If you can provide the fixed code snippet, provide it in the following format and place the code snippet in the <code> tag within ```java block.
+<response>
+  <success>true</success>
+  <code><![CDATA[
+  ```java
+  Your fixed code snippet here
+  ```
+    ]]>
+  </code>
+</response>
+
+15:13:22.283 TRACE edu.ucr.cs.riple.core.checkers.nullaway.codefix.ChatGPT.ask
+Retrieving response from cache
+15:13:22.283 TRACE edu.ucr.cs.riple.core.checkers.nullaway.codefix.Response.tryCreate
+Trying to create Response:
+Here's the fixed code snippet for the `cancelEventDelivery` method in the required format:
+
+```xml
+<response>
+  <success>true</success>
+  <code><![CDATA[
+  ```java
+  public void cancelEventDelivery(Object event) {
+    PostingThreadState postingState = currentPostingThreadState.get();
+    if (!postingState.isPosting) {
+      throw new EventBusException(
+          "This method may only be called from inside event handling methods on the posting thread");
+    } else if (event == null) {
+      throw new EventBusException("Event may not be null");
+    } else if (postingState.event != event) {
+      throw new EventBusException("Only the currently handled event may be aborted");
+    } else if (postingState.subscription != null 
+               && postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+      throw new EventBusException(" event handlers may only abort the incoming event");
+    }
+
+    postingState.canceled = true;
+  }
+  ```
+    ]]>
+  </code>
+</response>
+```
+15:13:22.284 TRACE edu.ucr.cs.riple.core.checkers.nullaway.codefix.Response.<init>
+Creating Response:
+Here's the fixed code snippet for the `cancelEventDelivery` method in the required format:
+
+```xml
+<response>
+  <success>true</success>
+  <code><![CDATA[
+  ```java
+  public void cancelEventDelivery(Object event) {
+    PostingThreadState postingState = currentPostingThreadState.get();
+    if (!postingState.isPosting) {
+      throw new EventBusException(
+          "This method may only be called from inside event handling methods on the posting thread");
+    } else if (event == null) {
+      throw new EventBusException("Event may not be null");
+    } else if (postingState.event != event) {
+      throw new EventBusException("Only the currently handled event may be aborted");
+    } else if (postingState.subscription != null 
+               && postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+      throw new EventBusException(" event handlers may only abort the incoming event");
+    }
+
+    postingState.canceled = true;
+  }
+  ```
+    ]]>
+  </code>
+</response>
+```
+15:13:22.286 TRACE edu.ucr.cs.riple.core.checkers.nullaway.codefix.Response.<init>
+Response created:
+public void cancelEventDelivery(Object event) {
+    PostingThreadState postingState = currentPostingThreadState.get();
+    if (!postingState.isPosting) {
+      throw new EventBusException(
+          "This method may only be called from inside event handling methods on the posting thread");
+    } else if (event == null) {
+      throw new EventBusException("Event may not be null");
+    } else if (postingState.event != event) {
+      throw new EventBusException("Only the currently handled event may be aborted");
+    } else if (postingState.subscription != null 
+               && postingState.subscription.subscriberMethod.threadMode != ThreadMode.POSTING) {
+      throw new EventBusException(" event handlers may only abort the incoming event");
+    }
+
+    postingState.canceled = true;
+  }
