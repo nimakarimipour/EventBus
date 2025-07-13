@@ -16,6 +16,7 @@
 package org.greenrobot.eventbus;
 
 import java.lang.reflect.Method;
+import javax.annotation.Nullable;
 
 /** Used internally by EventBus and generated subscriber indexes. */
 public class SubscriberMethod {
@@ -29,13 +30,18 @@ public class SubscriberMethod {
   String methodString;
 
   public SubscriberMethod(
-      Method method, Class<?> eventType, ThreadMode threadMode, int priority, boolean sticky) {
-    this.method = method;
-    this.threadMode = threadMode;
-    this.eventType = eventType;
-    this.priority = priority;
-    this.sticky = sticky;
-  }
+        Method method, Class<?> eventType, ThreadMode threadMode, int priority, boolean sticky) {
+      this.method = method;
+      this.threadMode = threadMode;
+      this.eventType = eventType;
+      this.priority = priority;
+      this.sticky = sticky;
+      this.methodString = generateMethodString();
+    }
+  
+    private String generateMethodString() {
+      return method.getDeclaringClass().getName() + "#" + method.getName();
+    }
 
   @Override
   public boolean equals(Object other) {
