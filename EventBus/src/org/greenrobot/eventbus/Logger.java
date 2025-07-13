@@ -16,7 +16,6 @@
 package org.greenrobot.eventbus;
 
 import android.os.Looper;
-import edu.ucr.cs.riple.annotator.util.Nullability;
 import java.util.logging.Level;
 import javax.annotation.Nullable;
 import org.greenrobot.eventbus.android.AndroidLogger;
@@ -57,7 +56,7 @@ public interface Logger {
     @Override
     public void log(Level level, String msg, @Nullable Throwable th) {
       System.out.println("[" + level + "] " + msg);
-      Nullability.castToNonnull(th).printStackTrace(System.out);
+      th.printStackTrace(System.out);
     }
   }
 
