@@ -440,6 +440,10 @@ public class EventBus {
   }
 
   private void postToSubscription(Subscription subscription, Object event, boolean isMainThread) {
+    if (mainThreadPoster == null) {
+      throw new IllegalStateException("mainThreadPoster is not initialized.");
+    }
+
     switch (subscription.subscriberMethod.threadMode) {
       case POSTING:
         invokeSubscriber(subscription, event);
@@ -452,12 +456,7 @@ public class EventBus {
         }
         break;
       case MAIN_ORDERED:
-        if (mainThreadPoster != null) {
-          mainThreadPoster.enqueue(subscription, event);
-        } else {
-          // temporary: technically not correct as poster not decoupled from subscriber
-          invokeSubscriber(subscription, event);
-        }
+        mainThreadPoster.enqueue(subscription, event);
         break;
       case BACKGROUND:
         if (isMainThread) {
