@@ -243,7 +243,6 @@ class SubscriberMethodFinder {
       subscriberClassByMethodKey.clear();
       methodKeyBuilder.setLength(0);
       subscriberClass = null;
-      clazz = null;
       skipSuperClasses = false;
       subscriberInfo = null;
     }
